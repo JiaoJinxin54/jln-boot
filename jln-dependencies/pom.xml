@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>top.jiaojinxin</groupId>
+        <artifactId>jln-boot</artifactId>
+        <version>0.1.6</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>jln-dependencies</artifactId>
+    <version>0.1.6</version>
+    <name>jln-dependencies</name>
+    <description>jln-dependencies</description>
+    
+    <dependencyManagement>
+        <dependencies>
+            <!-- jln-response-code -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-response-code</artifactId>
+                <version>${jln.version}</version>
+            </dependency>
+            <!-- jln-model -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-model</artifactId>
+                <version>${jln.version}</version>
+            </dependency>
+            <!-- jln-event -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-event</artifactId>
+                <version>${jln.version}</version>
+            </dependency>
+            <!-- jln-log -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-log</artifactId>
+                <version>${jln.version}</version>
+            </dependency>
+            <!-- jln-exception -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-exception</artifactId>
+                <version>${jln.version}</version>
+            </dependency>
+            <!-- jln-mybatis-plus -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-mybatis-plus</artifactId>
+                <version>${jln.version}</version>
+            </dependency>
+            <!-- jln-redis -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-redis</artifactId>
+                <version>${jln.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>top.jiaojinxin</groupId>
+        <artifactId>jln-boot</artifactId>
+        <version>0.1.6</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>jln-exception</artifactId>
+    <version>0.1.6</version>
+    <name>jln-exception</name>
+    <description>jln-exception</description>
+
+    <dependencies>
+        <!-- jln-model -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-model</artifactId>
+            <version>${jln.version}</version>
+        </dependency>
+        <!-- jln-log -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-log</artifactId>
+            <version>${jln.version}</version>
+        </dependency>
+        <!-- spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <!-- spring-boot-starter-validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+    </dependencies>
+</project>

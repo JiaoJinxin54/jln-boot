@@ -1,0 +1,18 @@
+### Java File ###
+*.class
+*.jar
+
+### Log File ###
+*.log
+
+### IntelliJ IDEA File ###
+.idea/
+target/
+out/
+*.iml
+
+### VS Code File ###
+.vscode/
+
+### Mac File ###
+.DS_Store

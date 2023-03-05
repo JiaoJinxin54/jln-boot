@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>top.jiaojinxin</groupId>
+        <artifactId>jln-boot</artifactId>
+        <version>0.1.6</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>jln-mybatis-plus</artifactId>
+    <version>0.1.6</version>
+    <name>jln-mybatis-plus</name>
+    <description>jln-mybatis-plus</description>
+
+    <dependencies>
+        <!-- jln-model -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-model</artifactId>
+            <version>${jln.version}</version>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>
