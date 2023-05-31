@@ -7,7 +7,7 @@ import java.io.Serial;
  *
  * @author JiaoJinxin
  */
-public class PageQuery<C extends PageCondition> implements Query {
+public class PageQuery<C> implements Query {
 
     @Serial
     private static final long serialVersionUID = -560117683339123344L;

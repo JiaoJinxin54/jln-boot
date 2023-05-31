@@ -67,6 +67,18 @@ public class Resp implements DTO {
     /**
      * 失败（使用指定的响应码）
      *
+     * @param code 响应码code
+     * @param args 响应码描述参数
+     * @return top.jiaojinxin.jln.model.resp.Resp
+     * @author JiaoJinxin
+     */
+    public static Resp bad(String code, String... args) {
+        return new Resp(false, RespCodeUtil.getRespCode(code, args));
+    }
+
+    /**
+     * 失败（使用指定的响应码）
+     *
      * @param respCode 响应码
      * @return top.jiaojinxin.jln.model.resp.Resp
      * @author JiaoJinxin

@@ -5,12 +5,12 @@
     <parent>
         <groupId>top.jiaojinxin</groupId>
         <artifactId>jln-boot</artifactId>
-        <version>0.1.6</version>
+        <version>0.1.7</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jln-mybatis-plus</artifactId>
-    <version>0.1.6</version>
+    <version>0.1.7</version>
     <name>jln-mybatis-plus</name>
     <description>jln-mybatis-plus</description>
 

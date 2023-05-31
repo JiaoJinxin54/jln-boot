@@ -5,12 +5,12 @@
     <parent>
         <groupId>top.jiaojinxin</groupId>
         <artifactId>jln-boot</artifactId>
-        <version>0.1.6</version>
+        <version>0.1.7</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jln-spring-boot-starter</artifactId>
-    <version>0.1.6</version>
+    <version>0.1.7</version>
     <name>jln-spring-boot-starter</name>
     <description>jln-spring-boot-starter</description>
 
@@ -49,6 +49,11 @@
         <dependency>
             <groupId>top.jiaojinxin</groupId>
             <artifactId>jln-redis</artifactId>
+        </dependency>
+        <!-- jln-oss -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-oss</artifactId>
         </dependency>
         <!-- hutool-core -->
         <dependency>

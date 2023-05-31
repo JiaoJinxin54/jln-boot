@@ -13,7 +13,8 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
- * Redis工具类
+ * Redis工具类 <br/>
+ * 加锁逻辑中未解决锁过期问题，若需要考虑锁过期问题，建议使用Redisson
  *
  * @author JiaoJinxin
  */
@@ -332,7 +333,7 @@ public class RedisUtil {
      */
     private static boolean doGetLock(String key, Long expireTime, TimeUnit timeUnit) {
         Boolean locked = RedisManager.value().setIfAbsent(key, DEF_VALUE, expireTime, timeUnit);
-        LogUtil.debug(log, String.format("尝试加锁（%s）......", key));
+        LogUtil.debug(log, String.format("尝试加锁（%s），加锁结果（%s）......", key, locked));
         return Boolean.TRUE.equals(locked);
     }
 
@@ -342,7 +343,7 @@ public class RedisUtil {
      * @param waitCondition 等待条件（为true时等待）
      * @param waitTime      等待时间
      * @param timeUnit      过期时间单位
-     * @return boolean
+     * @return boolean 当到达指定的等待时间后，返回最终状态，即是否未结束等待
      * @author JiaoJinxin
      */
     private static boolean cyclicWait(BooleanSupplier waitCondition, Long waitTime, TimeUnit timeUnit) {
@@ -363,7 +364,8 @@ public class RedisUtil {
                 TimeUnit.MILLISECONDS.sleep(sleep);
                 wait -= sleep;
             }
-        } catch (InterruptedException ignored) {
+        } catch (InterruptedException e) {
+            LogUtil.error(log, e, "加锁出现异常");
         }
         return isWait;
     }

@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.util.CollectionUtils;
-import top.jiaojinxin.jln.model.query.PageCondition;
 import top.jiaojinxin.jln.model.query.PageQuery;
 import top.jiaojinxin.jln.mp.model.BaseEntity;
+import top.jiaojinxin.jln.model.query.ConditionItem;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,6 +22,54 @@ import java.util.function.Function;
  * @author JiaoJinxin
  */
 public interface IBaseBO<E extends BaseEntity> extends IService<E> {
+
+    /**
+     * 校验是否存在（根据指定属性校验是否不存在）
+     *
+     * @param property      属性
+     * @param propertyValue 属性值
+     * @param <R>           属性类型
+     * @return boolean
+     * @author JiaoJinxin
+     */
+    default <R> boolean notExistsBy(SFunction<E, R> property, R propertyValue) {
+        return !existsBy(property, propertyValue);
+    }
+
+    /**
+     * 校验是否存在（根据指定属性校验是否存在）
+     *
+     * @param property      属性
+     * @param propertyValue 属性值
+     * @param <R>           属性类型
+     * @return boolean
+     * @author JiaoJinxin
+     */
+    default <R> boolean existsBy(SFunction<E, R> property, R propertyValue) {
+        return existsBy(Map.of(property, propertyValue));
+    }
+
+    /**
+     * 校验是否存在（根据指定属性校验是否不存在）
+     *
+     * @param propertyMap 属性与属性值的Map集合
+     * @param <R>         属性类型
+     * @return boolean
+     * @author JiaoJinxin
+     */
+    default <R> boolean notExistsBy(Map<SFunction<E, R>, R> propertyMap) {
+        return !existsBy(propertyMap);
+    }
+
+    /**
+     * 校验是否存在（根据指定属性校验是否存在）
+     *
+     * @param propertyMap 属性与属性值的Map集合
+     * @param <R>         属性类型
+     * @return boolean
+     * @author JiaoJinxin
+     */
+    <R> boolean existsBy(Map<SFunction<E, R>, R> propertyMap);
 
     /**
      * 删除（根据指定属性获取符合条件的所有对象）
@@ -109,26 +157,26 @@ public interface IBaseBO<E extends BaseEntity> extends IService<E> {
      * 分页查询
      *
      * @param pageQuery            分页查询数据传输对象
-     * @param conditionItemConvert 转换器：将分页查询条件{@link PageCondition}转换为{@link PageCondition.ConditionItem}
+     * @param conditionItemConvert 转换器：将分页查询条件转换为Map（key为column，value为{@link ConditionItem}）
      * @param <C>                  分页查询条件数据传输对象
      * @return com.baomidou.mybatisplus.core.metadata.IPage
      * @author JiaoJinxin
      */
-    <C extends PageCondition> IPage<E> page(PageQuery<C> pageQuery, Function<C, Map<SFunction<E, ?>, PageCondition.ConditionItem<?>>> conditionItemConvert);
+    <C> IPage<E> page(PageQuery<C> pageQuery, Function<C, Map<SFunction<E, ?>, ConditionItem<?>>> conditionItemConvert);
 
     /**
      * 分页查询
      *
      * @param pageQuery            分页查询数据传输对象
      * @param entityConvert        转换器：将分页查询结果{@link E}转换为{@link F}
-     * @param conditionItemConvert 转换器：将分页查询条件{@link PageCondition}转换为{@link PageCondition.ConditionItem}
+     * @param conditionItemConvert 转换器：将分页查询条件转换为Map（key为column，value为{@link ConditionItem}）
      * @param <C>                  分页查询条件数据传输对象
      * @param <F>                  分页查询实际返回结果
      * @return com.baomidou.mybatisplus.core.metadata.IPage
      * @author JiaoJinxin
      */
-    default <C extends PageCondition, F> IPage<F> page(PageQuery<C> pageQuery, Function<E, F> entityConvert,
-                                                       Function<C, Map<SFunction<E, ?>, PageCondition.ConditionItem<?>>> conditionItemConvert) {
+    default <C, F> IPage<F> page(PageQuery<C> pageQuery, Function<E, F> entityConvert,
+                                 Function<C, Map<SFunction<E, ?>, ConditionItem<?>>> conditionItemConvert) {
         return page(pageQuery, conditionItemConvert).convert(entityConvert);
     }
 }

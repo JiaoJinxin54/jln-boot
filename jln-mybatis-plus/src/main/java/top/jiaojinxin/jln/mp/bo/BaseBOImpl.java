@@ -1,14 +1,16 @@
 package top.jiaojinxin.jln.mp.bo;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jiaojinxin.jln.model.query.PageCondition;
+import org.springframework.util.CollectionUtils;
 import top.jiaojinxin.jln.model.query.PageQuery;
 import top.jiaojinxin.jln.mp.dao.IBaseDAO;
 import top.jiaojinxin.jln.mp.model.BaseEntity;
+import top.jiaojinxin.jln.model.query.ConditionItem;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +29,25 @@ import java.util.function.Function;
 public abstract class BaseBOImpl<E extends BaseEntity, D extends IBaseDAO<E>> extends ServiceImpl<D, E> implements IBaseBO<E> {
 
     @Override
+    public <R> boolean existsBy(Map<SFunction<E, R>, R> propertyMap) {
+        if (CollectionUtils.isEmpty(propertyMap)) {
+            return false;
+        }
+        LambdaQueryChainWrapper<E> wrapper = lambdaQuery();
+        propertyMap.forEach((key, val) -> {
+            if (key == null) {
+                return;
+            }
+            if (val == null) {
+                wrapper.isNull(key);
+            } else {
+                wrapper.eq(key, val);
+            }
+        });
+        return wrapper.exists();
+    }
+
+    @Override
     public <F> Collection<F> listByIds(Collection<Integer> ids, Function<E, F> convertor) {
         return listByIds(ids).stream().map(convertor).toList();
     }
@@ -40,36 +61,52 @@ public abstract class BaseBOImpl<E extends BaseEntity, D extends IBaseDAO<E>> ex
     }
 
     @Override
-    public <C extends PageCondition> IPage<E> page(PageQuery<C> pageQuery, Function<C, Map<SFunction<E, ?>, PageCondition.ConditionItem<?>>> conditionItemConvert) {
+    public <C> IPage<E> page(PageQuery<C> pageQuery, Function<C, Map<SFunction<E, ?>, ConditionItem<?>>> conditionItemConvert) {
         Page<E> page = Page.of(pageQuery.getPageNum(), pageQuery.getPageSize(), true);
-        C condition = pageQuery.getCondition();
-        if (null == condition) {
-            return lambdaQuery().orderByDesc(BaseEntity::getCreateAt).page(page);
+        // 若根据条件获取到的字典Map为空，则直接跳过
+        Map<SFunction<E, ?>, ConditionItem<?>> columnMap = conditionItemConvert.apply(pageQuery.getCondition());
+        if (CollectionUtils.isEmpty(columnMap)) {
+            return lambdaQuery().page(page);
         }
         LambdaQueryChainWrapper<E> wrapper = lambdaQuery();
-        conditionItemConvert.apply(condition).forEach((k, v) -> {
-            if (v == null || v.getValue() == null) {
+        columnMap.forEach((column, conditionItem) -> {
+            if (conditionItem == null) {
                 return;
             }
-            switch (v.getMatchType()) {
-                case LIKE -> wrapper.like(k, v.getValue());
-                case L_LIKE -> wrapper.likeLeft(k, v.getValue());
-                case R_LIKE -> wrapper.likeRight(k, v.getValue());
-                case IN -> wrapper.in(k, v.getValue());
-                case GT -> wrapper.gt(k, v.getValue());
-                case GE -> wrapper.ge(k, v.getValue());
-                case LT -> wrapper.lt(k, v.getValue());
-                case LE -> wrapper.le(k, v.getValue());
-                case NOT_EQUALS -> wrapper.ne(k, v.getValue());
-                default -> wrapper.eq(k, v.getValue());
-            }
-            switch (v.getOrderType()) {
-                case DESC -> wrapper.orderByDesc(k);
-                case ASC -> wrapper.orderByAsc(k);
-                default -> {
+            // 匹配条件
+            if (ObjectUtils.isNotNull(conditionItem.getValue())) {
+                switch (conditionItem.getMatchType()) {
+                    case LIKE -> wrapper.like(column, conditionItem.getValue());
+                    case L_LIKE -> wrapper.likeLeft(column, conditionItem.getValue());
+                    case R_LIKE -> wrapper.likeRight(column, conditionItem.getValue());
+                    case IN -> {
+                        if (conditionItem.getValue() instanceof Collection<?> collection) {
+                            wrapper.in(column, collection);
+                        } else if (conditionItem.getValue() instanceof Object[] objs) {
+                            wrapper.in(column, objs);
+                        }
+                    }
+                    case NOT_IN -> {
+                        if (conditionItem.getValue() instanceof Collection<?> collection) {
+                            wrapper.notIn(column, collection);
+                        } else if (conditionItem.getValue() instanceof Object[] objs) {
+                            wrapper.notIn(column, objs);
+                        }
+                    }
+                    case GT -> wrapper.gt(column, conditionItem.getValue());
+                    case GE -> wrapper.ge(column, conditionItem.getValue());
+                    case LT -> wrapper.lt(column, conditionItem.getValue());
+                    case LE -> wrapper.le(column, conditionItem.getValue());
+                    case NOT_EQUALS -> wrapper.ne(column, conditionItem.getValue());
+                    case EQUALS -> wrapper.eq(column, conditionItem.getValue());
                 }
             }
+            // 排序条件
+            switch (conditionItem.getOrderType()) {
+                case DESC -> wrapper.orderByDesc(column);
+                case ASC -> wrapper.orderByAsc(column);
+            }
         });
-        return wrapper.orderByDesc(BaseEntity::getCreateAt).page(page);
+        return wrapper.page(page);
     }
 }

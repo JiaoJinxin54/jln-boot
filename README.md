@@ -64,7 +64,7 @@ jln-boot
     <dependency>
         <groupId>top.jiaojinxin</groupId>
         <artifactId>jln-event</artifactId>
-        <version>0.1.6</version>
+        <version>0.1.7</version>
     </dependency>
 </dependencies>
 ```
@@ -84,7 +84,7 @@ jln-boot
         <dependency>
             <groupId>top.jiaojinxin</groupId>
             <artifactId>jln-dependencies</artifactId>
-            <version>0.1.6</version>
+            <version>0.1.7</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -110,7 +110,9 @@ top.jiaojinxin.jln.model
 ├─query
 │  ├─Query：查询传输对象，应用场景：不会改变对象状态、对系统没有副作用、会有返回结果，多用于查询；
 │  ├─PageQuery：分页查询传输对象，特定于分页查询场景的查询传输对象；
-│  └─PageCondition：分页查询传输对象中的条件实体抽象，用于定义分页查询条件；
+│  ├─ConditionItem：分页查询条件，特定于分页查询场景，用于分页查询传输对象的分页查询条件中；
+│  ├─OrderType：排序模式，特定于分页查询条件的排序模式；
+│  └─MatchType：匹配类型，特定于分页查询条件的匹配类型；
 └─resp
    ├─Resp：顶级响应对象，所有数据响应对象均需要继承该基础类；
    ├─SingletonResp<?>：单值响应对象，特定于返回单一对象的响应场景；
@@ -123,57 +125,18 @@ top.jiaojinxin.jln.model
 以下为分页查询场景示例：
 
 ```java
-/**
- * 分页查询条件
- */
-public class DemoPageCondition extends PageCondition {
-    /**
-     * 名称条件
-     */
+public class DemoCondition {
     private ConditionItem<String> name;
-    // get、set...
+    // getter、setter
 }
-```
-
-```java
-/**
- * 分页查询结果体。
- * PageResp.PageResult设计为接口的原因是可以方便扩展额外的自定义响应属性。
- */
-public class DemoPageResult implements PageResp.PageResult<Demo> {
-    /**
-     * 当前页的数据集
-     */
-    private Demo[] items;
-    /**
-     * 数据总量
-     */
-    private Long count;
-    /**
-     * 当前页码
-     */
-    private Long pageNum;
-    /**
-     * 每页查询数量
-     */
-    private Long pageSize;
-    // 额外需要扩展的自定义响应属性...
-    // get、set...
-}
-```
-
-```java
 
 @RestController
 public class DemoController {
     @GetMapping("/demo/page")
-    public Resp page(PageQuery<DemoPageCondition> pageQuery) {
-        DemoPageResult pageResult = new DemoPageResult();
-        pageResult.setItems(data);
-        pageResult.setCount(totalCount);
-        pageResult.setPageNum(pageQuery.getPageNum());
-        pageResult.setPageSize(pageQuery.getPageSize());
-        return PageResp.ok(pageResult);
+    public Resp page(PageQuery<DemoCondition> pageQuery) {
+        // 执行查询
+        // 组装结果
+        return PageResp.ok(pageQuery.getPageNum(), pageQuery.getPageSize(), totalCount, data);
     }
 }
 ```
@@ -526,6 +489,8 @@ public class DemoService {
 `Redis`模块，提供了默认的`RedisTemplate`配置，默认使用`StringRedisTemplate`
 ，及key与value的序列化方式均采用`RedisSerializer.string()`。
 
+**注：该模块的工具类（`RedisUtil`）中提供了加锁执行业务逻辑的工具方法（`lock(...)`），但该方法实现中未解决锁过期问题，若需要考虑锁过期问题，建议使用`Redisson`。**
+
 #### 6.2. 相关配置参数介绍
 
 | 配置项                 | 描述       | 类型       | 默认值                   |
@@ -619,3 +584,68 @@ jln.mybatis-plus.escape-symbol=''
 #### 7.4. 示例
 
 这里不在赘述`Mybatis-Plus`的使用方法，具体可参考[官方网站](https://baomidou.com/)。
+
+### 8. `jln-oss`
+
+#### 8.1. 介绍
+
+`jln-oss`模块提供了文件上传功能，基于`aws-java-sdk-s3`实现。
+
+#### 8.2. 核心接口/类描述
+
+- `OssTemplate`：对象存储模版抽象接口，提供oss基础功能，提供了默认实现，也可基于该接口自定义实现；
+- `DefaultOssTemplateImpl`：对象存储模版默认实现，基于`aws-java-sdk-s3`的默认`OssTemplate`实现。
+
+#### 8.3. 相关配置参数介绍
+
+| 项                        | 描述      | 类型      | 默认值        |
+|:-------------------------|:--------|:--------|:-----------|
+| jln.oss.enable           | 是否开启oss | boolean | false      |
+| jln.oss.service-endpoint | oss服务地址 | string  | -          |
+| jln.oss.signing-region   | 区域      | string  | cn-north-1 |
+| jln.oss.access-key       | 访问令牌    | string  | -          |
+| jln.oss.secret-key       | 访问秘钥    | string  | -          |
+| jln.oss.bucket-name      | 桶名称     | string  | -          |
+
+`application.yml`示例：
+
+```yml
+jln:
+  oss:
+    enable: true
+    service-endpoint: localhost:9000
+    signing-region: cn-north-1
+    access-key: accessKey
+    secret-key: secretKey
+    bucket-name: bucketName
+```
+
+`application.properties`示例：
+
+```properties
+jln.oss.enable=true
+jln.oss.service-endpoint=localhost:9000
+jln.oss.signing-region=cn-north-1
+jln.oss.access-key=accessKey
+jln.oss.secret-key=secretKey
+jln.oss.bucket-name=bucketName
+```
+
+#### 8.4. 示例
+
+以下为上传头像且设置为公共可读的例子：
+
+```java
+
+@RestController
+@RequestMapping("/user")
+@RequiredArgsConstructor
+public class UserController {
+    private final OssTemplate ossTemplate;
+
+    @PostMapping("/avatar/upload")
+    public Resp uploadAvatar(@RequestPart("file") MultipartFile file) {
+        return SingletonResp.ok(ossTemplate.upload(avatar, CannedAccessControlList.PublicRead));
+    }
+}
+```

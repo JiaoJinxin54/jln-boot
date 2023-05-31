@@ -2,6 +2,8 @@ package top.jiaojinxin.jln.model.resp;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * 分页响应对象
@@ -25,16 +27,46 @@ public class PageResp<T> extends SingletonResp<PageResp.PageResult<T>> {
     }
 
     /**
-     * 构造方法
+     * 成功
      *
-     * @param items    当前页数据
-     * @param count    总数量
      * @param pageNum  页码
      * @param pageSize 每页数量
+     * @param count    总数量
+     * @param items    当前页数据
+     * @param <T>      数据类型
+     * @return top.jiaojinxin.jln.model.resp.PageResp
      * @author JiaoJinxin
      */
-    protected PageResp(Long pageNum, Long pageSize, Long count, T[] items) {
-        super(new DefaultPageResult<>(items, count, pageNum, pageSize));
+    public static <T> PageResp<T> ok(Long pageNum, Long pageSize, Long count, T[] items) {
+        return new PageResp<>(new DefaultPageResult<>(Arrays.stream(items).toList(), count, pageNum, pageSize));
+    }
+
+    /**
+     * 成功
+     *
+     * @param pageNum  页码
+     * @param pageSize 每页数量
+     * @param count    总数量
+     * @param items    当前页数据
+     * @param <T>      数据类型
+     * @return top.jiaojinxin.jln.model.resp.PageResp
+     * @author JiaoJinxin
+     */
+    public static <T> PageResp<T> ok(Long pageNum, Long pageSize, Long count, Collection<T> items) {
+        return new PageResp<>(new DefaultPageResult<>(items, count, pageNum, pageSize));
+    }
+
+    /**
+     * 成功
+     *
+     * @param pr   分页查询结果
+     * @param <T>  数据类型
+     * @param <PR> 分页查询响应体类型
+     * @return top.jiaojinxin.jln.model.resp.PageResp
+     * @author JiaoJinxin
+     */
+    public static <T, PR extends PageResp.PageResult<T>> PageResp<T> ok(PR pr) {
+        return new PageResp<>(pr);
     }
 
     /**
@@ -50,7 +82,7 @@ public class PageResp<T> extends SingletonResp<PageResp.PageResult<T>> {
          * @return T[]
          * @author JiaoJinxin
          */
-        T[] getItems();
+        Collection<T> getItems();
 
         /**
          * 总数量
@@ -86,9 +118,10 @@ public class PageResp<T> extends SingletonResp<PageResp.PageResult<T>> {
      * @param pageSize 每页数量
      * @author JiaoJinxin
      */
-    private record DefaultPageResult<T>(T[] items, Long count, Long pageNum, Long pageSize) implements PageResult<T> {
+    private record DefaultPageResult<T>(Collection<T> items, Long count, Long pageNum,
+                                        Long pageSize) implements PageResult<T> {
         @Override
-        public T[] getItems() {
+        public Collection<T> getItems() {
             return this.items;
         }
 

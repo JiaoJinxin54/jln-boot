@@ -17,6 +17,7 @@ import top.jiaojinxin.jln.log.JsonFormatter;
 import top.jiaojinxin.jln.log.StringFormatter;
 import top.jiaojinxin.jln.mp.MpCurrUserHolder;
 import top.jiaojinxin.jln.mp.model.MpCurrUser;
+import top.jiaojinxin.jln.oss.OssTemplate;
 import top.jiaojinxin.jln.properties.JlnEventProperties;
 import top.jiaojinxin.jln.properties.JlnMpProperties;
 import top.jiaojinxin.jln.properties.JlnRedisProperties;
@@ -415,6 +416,20 @@ public class JlnManager {
      */
     public static void setTransactionTemplate(TransactionTemplate transactionTemplate) {
         MpManager.setTransactionTemplate(transactionTemplate);
+    }
+
+    // endregion
+
+    // region oss模块
+
+    /**
+     * 获取{@link OssTemplate}
+     *
+     * @return top.jiaojinxin.jln.oss.OssTemplate
+     * @author JiaoJinxin
+     */
+    public static OssTemplate getOssTemplate() {
+        return OssManager.getOssTemplate();
     }
 
     // endregion

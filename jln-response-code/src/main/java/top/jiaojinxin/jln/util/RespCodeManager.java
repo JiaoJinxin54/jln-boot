@@ -48,7 +48,7 @@ public class RespCodeManager {
     /**
      * {@link Locale}持有者
      */
-    private static LocaleHolder localeHolder;
+    private static volatile LocaleHolder localeHolder;
 
     /**
      * 获取{@link LocaleHolder}

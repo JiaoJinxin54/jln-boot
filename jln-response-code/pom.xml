@@ -5,12 +5,12 @@
     <parent>
         <groupId>top.jiaojinxin</groupId>
         <artifactId>jln-boot</artifactId>
-        <version>0.1.6</version>
+        <version>0.1.7</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jln-response-code</artifactId>
-    <version>0.1.6</version>
+    <version>0.1.7</version>
     <name>jln-response-code</name>
     <description>jln-response-code</description>
 

@@ -536,20 +536,6 @@ public class JlnUtil {
 
     // endregion
 
-    // region MybatisPlus模块
-
-    /**
-     * 开启事务执行某段程序
-     *
-     * @param runnable 需要开启事务运行的程序
-     * @author JiaoJinxin
-     */
-    public static void executeTransaction(Runnable runnable) {
-        MpUtil.executeTransaction(runnable);
-    }
-
-    // endregion
-
     // region jln-spring-boot-starter模块
 
     /**
