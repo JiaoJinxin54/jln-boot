@@ -1,68 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>top.jiaojinxin</groupId>
-        <artifactId>jln-boot</artifactId>
-        <version>0.1.7</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-
+    <groupId>top.jiaojinxin</groupId>
     <artifactId>jln-dependencies</artifactId>
-    <version>0.1.7</version>
+    <version>3.1.6.0-SNAPSHOT</version>
     <name>jln-dependencies</name>
-    <description>jln-dependencies</description>
-    
+    <description>统一依赖管理。</description>
+
+    <properties>
+        <spring-boot.version>3.1.6</spring-boot.version>
+        <aws-java-sdk-s3.version>1.12.429</aws-java-sdk-s3.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
-            <!-- jln-response-code -->
+            <!-- jln-core -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
-                <artifactId>jln-response-code</artifactId>
-                <version>${jln.version}</version>
-            </dependency>
-            <!-- jln-model -->
-            <dependency>
-                <groupId>top.jiaojinxin</groupId>
-                <artifactId>jln-model</artifactId>
-                <version>${jln.version}</version>
-            </dependency>
-            <!-- jln-event -->
-            <dependency>
-                <groupId>top.jiaojinxin</groupId>
-                <artifactId>jln-event</artifactId>
-                <version>${jln.version}</version>
-            </dependency>
-            <!-- jln-log -->
-            <dependency>
-                <groupId>top.jiaojinxin</groupId>
-                <artifactId>jln-log</artifactId>
-                <version>${jln.version}</version>
-            </dependency>
-            <!-- jln-exception -->
-            <dependency>
-                <groupId>top.jiaojinxin</groupId>
-                <artifactId>jln-exception</artifactId>
-                <version>${jln.version}</version>
-            </dependency>
-            <!-- jln-mybatis-plus -->
-            <dependency>
-                <groupId>top.jiaojinxin</groupId>
-                <artifactId>jln-mybatis-plus</artifactId>
-                <version>${jln.version}</version>
-            </dependency>
-            <!-- jln-redis -->
-            <dependency>
-                <groupId>top.jiaojinxin</groupId>
-                <artifactId>jln-redis</artifactId>
-                <version>${jln.version}</version>
+                <artifactId>jln-core</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <!-- jln-oss -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-oss</artifactId>
-                <version>${jln.version}</version>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- jln-sign -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-sign</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- jln-audit-log -->
+            <dependency>
+                <groupId>top.jiaojinxin</groupId>
+                <artifactId>jln-audit-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- spring-boot-dependencies -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- aws-java-sdk-s3 -->
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${aws-java-sdk-s3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
