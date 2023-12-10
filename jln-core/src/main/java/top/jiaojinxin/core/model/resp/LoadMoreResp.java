@@ -32,7 +32,7 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
      *
      * @param last  当前页数据最后一个ID，即items中最后一条数据的唯一标识
      * @param items 当前页数据
-     * @return top.jiaojinxin.core.model.resp.LoadMoreResp<ID, T>
+     * @return top.jiaojinxin.core.model.resp.LoadMoreResp
      * @author JiaoJinxin
      */
     public static <ID, T> LoadMoreResp<ID, T> ok(ID last, @NonNull T[] items) {
@@ -44,7 +44,7 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
      *
      * @param last  当前页数据最后一个ID，即items中最后一条数据的唯一标识
      * @param items 当前页数据
-     * @return top.jiaojinxin.core.model.resp.LoadMoreResp<ID, T>
+     * @return top.jiaojinxin.core.model.resp.LoadMoreResp
      * @author JiaoJinxin
      */
     public static <ID, T> LoadMoreResp<ID, T> ok(ID last, @NonNull Collection<T> items) {

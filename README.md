@@ -29,7 +29,7 @@
     <dependency>
         <groupId>top.jiaojinxin</groupId>
         <artifactId>jln-core</artifactId>
-        <version>3.1.6.0-SNAPSHOT</version>
+        <version>3.1.6.0</version>
     </dependency>
 </dependencies>
 ```
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>top.jiaojinxin</groupId>
             <artifactId>jln-dependencies</artifactId>
-            <version>3.1.6.0-SNAPSHOT</version>
+            <version>3.1.6.0</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
