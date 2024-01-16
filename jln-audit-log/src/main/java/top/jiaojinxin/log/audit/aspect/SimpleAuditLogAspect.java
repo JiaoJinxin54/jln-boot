@@ -1,4 +1,4 @@
-package top.jiaojinxin.log.audit.handler;
+package top.jiaojinxin.log.audit.aspect;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,12 +11,18 @@ import top.jiaojinxin.log.audit.model.LogDetails;
 import java.io.Serial;
 
 /**
- * 简单日志注解处理程序
+ * 简单日志注解切面实现
  *
  * @author JiaoJinxin
  */
 @Slf4j
-public class SimpleLogAnnotationHandler implements LogAnnotationHandler<SimpleLogAnnotationHandler.DefLogDetails> {
+public class SimpleAuditLogAspect extends AuditLogAspect<SimpleAuditLogAspect.DefLogDetails> {
+
+    /**
+     * 简单日志注解切面实现
+     */
+    public SimpleAuditLogAspect() {
+    }
 
     @Override
     public DefLogDetails init() {
@@ -48,6 +54,12 @@ public class SimpleLogAnnotationHandler implements LogAnnotationHandler<SimpleLo
     public static class DefLogDetails implements LogDetails {
         @Serial
         private static final long serialVersionUID = 5490160100089945203L;
+
+        /**
+         * 默认日志详情
+         */
+        public DefLogDetails() {
+        }
 
         /**
          * 操作

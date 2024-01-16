@@ -29,7 +29,7 @@
     <dependency>
         <groupId>top.jiaojinxin</groupId>
         <artifactId>jln-core</artifactId>
-        <version>3.1.6.0</version>
+        <version>3.1.7.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>top.jiaojinxin</groupId>
             <artifactId>jln-dependencies</artifactId>
-            <version>3.1.6.0</version>
+            <version>3.1.7.0-SNAPSHOT</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -71,6 +71,6 @@
 
 该项目版本与`SpringBoot`版本对应，且在`SpringBoot`版本号后增加小分支，用于同版本内迭代，例如：
 
-`3.1.6.x`版本的`jln-boot`对应使用`3.1.6`版本的`SpringBoot`；
+`3.1.7.x`版本的`jln-boot`对应使用`3.1.7`版本的`SpringBoot`；
 
 `2.7.18.x`版本的`jln-boot`对应使用`2.7.18`版本的`SpringBoot`；

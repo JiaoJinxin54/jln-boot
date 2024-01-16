@@ -20,7 +20,6 @@ public class BizException extends BaseException {
      *
      * @param code 国际化码code
      * @param args 国际化码描述参数
-     * @author JiaoJinxin
      */
     public BizException(@NonNull String code, @NonNull String[] args) {
         super(code, args);
@@ -30,7 +29,6 @@ public class BizException extends BaseException {
      * 构造方法
      *
      * @param code 国际化码code
-     * @author JiaoJinxin
      */
     public BizException(@NonNull String code) {
         this(code, EMPTY_STRING_ARRAY);
@@ -38,8 +36,6 @@ public class BizException extends BaseException {
 
     /**
      * 构造方法
-     *
-     * @author JiaoJinxin
      */
     public BizException() {
         this(CoreUtil.getFailBiz());

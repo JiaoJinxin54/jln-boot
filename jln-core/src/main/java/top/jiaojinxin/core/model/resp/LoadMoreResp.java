@@ -10,6 +10,8 @@ import java.util.Collection;
 /**
  * 加载更多响应对象
  *
+ * @param <ID> ID泛型
+ * @param <T>  条件泛型
  * @author JiaoJinxin
  */
 public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResult<ID, T>> {
@@ -21,7 +23,6 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
      * 构造方法
      *
      * @param data 响应数据值
-     * @author JiaoJinxin
      */
     private LoadMoreResp(@NonNull LoadMoreResult<ID, T> data) {
         super(data);
@@ -32,8 +33,9 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
      *
      * @param last  当前页数据最后一个ID，即items中最后一条数据的唯一标识
      * @param items 当前页数据
+     * @param <ID>  ID泛型
+     * @param <T>   条件泛型
      * @return top.jiaojinxin.core.model.resp.LoadMoreResp
-     * @author JiaoJinxin
      */
     public static <ID, T> LoadMoreResp<ID, T> ok(ID last, @NonNull T[] items) {
         return ok(new DefaultLoadMoreResult<>(last, Arrays.stream(items).toList()));
@@ -44,8 +46,9 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
      *
      * @param last  当前页数据最后一个ID，即items中最后一条数据的唯一标识
      * @param items 当前页数据
+     * @param <ID>  ID泛型
+     * @param <T>   条件泛型
      * @return top.jiaojinxin.core.model.resp.LoadMoreResp
-     * @author JiaoJinxin
      */
     public static <ID, T> LoadMoreResp<ID, T> ok(ID last, @NonNull Collection<T> items) {
         return ok(new DefaultLoadMoreResult<>(last, items));
@@ -54,9 +57,11 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
     /**
      * 成功
      *
-     * @param data 加载更多结果
+     * @param data  加载更多结果
+     * @param <ID>  ID泛型
+     * @param <T>   条件泛型
+     * @param <LMR> 加载更多结果泛型
      * @return top.jiaojinxin.core.model.resp.LoadMoreResp
-     * @author JiaoJinxin
      */
     public static <ID, T, LMR extends LoadMoreResult<ID, T>> LoadMoreResp<ID, T> ok(LMR data) {
         return new LoadMoreResp<>(data);
@@ -65,7 +70,8 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
     /**
      * 加载更多结果
      *
-     * @author JiaoJinxin
+     * @param <ID> ID泛型
+     * @param <T>  条件泛型
      */
     public interface LoadMoreResult<ID, T> extends Serializable {
 
@@ -73,7 +79,6 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
          * 当前页数据最后一个ID
          *
          * @return ID
-         * @author JiaoJinxin
          */
         ID getLast();
 
@@ -81,7 +86,6 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
          * 当前页数据
          *
          * @return T[]
-         * @author JiaoJinxin
          */
         Collection<T> getItems();
     }
@@ -89,7 +93,10 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
     /**
      * 默认的加载更多结果实体
      *
-     * @author JiaoJinxin
+     * @param getLast  当前页数据最后一个ID，即items中最后一条数据的唯一标识
+     * @param getItems 当前页数据
+     * @param <ID>     ID泛型
+     * @param <T>      数据泛型
      */
     private record DefaultLoadMoreResult<ID, T>(ID getLast, Collection<T> getItems) implements LoadMoreResult<ID, T> {
     }

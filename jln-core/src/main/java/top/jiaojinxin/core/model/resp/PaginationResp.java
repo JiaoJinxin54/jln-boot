@@ -21,7 +21,6 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
      * 构造方法
      *
      * @param data 响应数据值
-     * @author JiaoJinxin
      */
     protected PaginationResp(@NonNull PaginationResp.PaginationResult<T> data) {
         super(data);
@@ -33,8 +32,7 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
      * @param count 总数量
      * @param items 当前页数据
      * @param <T>   数据类型
-     * @return top.jiaojinxin.core.model.resp.model.PageResp
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.core.model.resp.PaginationResp
      */
     public static <T> PaginationResp<T> ok(long count, @NonNull T[] items) {
         return ok(new DefaultPaginationResult<>(count, Arrays.stream(items).toList()));
@@ -46,8 +44,7 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
      * @param count 总数量
      * @param items 当前页数据
      * @param <T>   数据类型
-     * @return top.jiaojinxin.core.model.resp.model.PageResp
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.core.model.resp.PaginationResp
      */
     public static <T> PaginationResp<T> ok(long count, @NonNull Collection<T> items) {
         return ok(new DefaultPaginationResult<>(count, items));
@@ -59,8 +56,7 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
      * @param pr   分页查询结果
      * @param <T>  数据类型
      * @param <PR> 分页查询响应体类型
-     * @return top.jiaojinxin.core.model.resp.model.PageResp
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.core.model.resp.PaginationResp
      */
     public static <T, PR extends PaginationResult<T>> PaginationResp<T> ok(@NonNull PR pr) {
         return new PaginationResp<>(pr);
@@ -69,7 +65,7 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
     /**
      * 分页结果
      *
-     * @author JiaoJinxin
+     * @param <T> 条件泛型
      */
     public interface PaginationResult<T> extends Serializable {
 
@@ -77,7 +73,6 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
          * 总数量
          *
          * @return java.lang.Long
-         * @author JiaoJinxin
          */
         Long getCount();
 
@@ -85,7 +80,6 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
          * 当前页数据
          *
          * @return T[]
-         * @author JiaoJinxin
          */
         Collection<T> getItems();
     }
@@ -95,7 +89,7 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
      *
      * @param getCount 总数量
      * @param getItems 当前页数据
-     * @author JiaoJinxin
+     * @param <T>      分页查询结果泛型
      */
     private record DefaultPaginationResult<T>(Long getCount, Collection<T> getItems) implements PaginationResult<T> {
     }

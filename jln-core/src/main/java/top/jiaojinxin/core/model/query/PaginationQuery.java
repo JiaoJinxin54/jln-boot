@@ -8,6 +8,7 @@ import java.io.Serial;
 /**
  * 分页查询传输对象
  *
+ * @param <C> 条件泛型
  * @author JiaoJinxin
  */
 @Getter
@@ -31,4 +32,10 @@ public class PaginationQuery<C> implements Query {
      * 条件
      */
     private C condition;
+
+    /**
+     * 分页查询传输对象
+     */
+    public PaginationQuery() {
+    }
 }

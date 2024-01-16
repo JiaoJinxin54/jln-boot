@@ -12,7 +12,6 @@ public interface ClientPublicKeyHolder {
      *
      * @param clientCode 客户端标识
      * @return java.lang.String
-     * @author JiaoJinxin
      */
     String clientPublicKey(String clientCode);
 }

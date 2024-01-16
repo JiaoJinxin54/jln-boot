@@ -38,7 +38,6 @@ public class Resp implements DTO {
      *
      * @param ok       是否成功
      * @param i18nCode 国际化码
-     * @author JiaoJinxin
      */
     protected Resp(boolean ok, @NonNull I18nCode i18nCode) {
         this.ok = ok;
@@ -49,31 +48,39 @@ public class Resp implements DTO {
     /**
      * 成功
      *
-     * @return top.jiaojinxin.core.model.resp.model.Resp
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.core.model.resp.Resp
      */
     public static Resp ok() {
         return new Resp(true, CoreUtil.getSuccessRespCode());
     }
 
     /**
-     * 失败（使用默认的国际化码）
+     * 失败（使用指定的国际化码）
      *
-     * @return top.jiaojinxin.core.model.resp.model.Resp
-     * @author JiaoJinxin
+     * @param i18nCode 国际化码
+     * @return top.jiaojinxin.core.model.resp.Resp
      */
-    public static Resp bad() {
-        return new Resp(false, CoreUtil.getFailRespCode());
+    public static Resp bad(@NonNull I18nCode i18nCode) {
+        return new Resp(false, i18nCode);
     }
 
     /**
      * 失败（使用指定的国际化码）
      *
-     * @param i18nCode 国际化码
-     * @return top.jiaojinxin.core.model.resp.model.Resp
-     * @author JiaoJinxin
+     * @param code 国际化码code
+     * @param args 国际化码描述参数
+     * @return top.jiaojinxin.core.model.resp.Resp
      */
-    public static Resp bad(@NonNull I18nCode i18nCode) {
-        return new Resp(false, i18nCode);
+    public static Resp bad(@NonNull String code, String... args) {
+        return bad(CoreUtil.getRespCode(code, args));
+    }
+
+    /**
+     * 失败（使用默认的国际化码）
+     *
+     * @return top.jiaojinxin.core.model.resp.Resp
+     */
+    public static Resp bad() {
+        return bad(CoreUtil.getFailRespCode());
     }
 }

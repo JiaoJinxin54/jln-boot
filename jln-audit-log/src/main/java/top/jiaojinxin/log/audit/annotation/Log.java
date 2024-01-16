@@ -22,7 +22,6 @@ public @interface Log {
      * 操作
      *
      * @return java.lang.String
-     * @author JiaoJinxin
      */
     String operation();
 }

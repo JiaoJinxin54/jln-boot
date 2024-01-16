@@ -3,8 +3,7 @@ package top.jiaojinxin.log.audit.configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import top.jiaojinxin.log.audit.aspect.AuditLogAspect;
-import top.jiaojinxin.log.audit.handler.LogAnnotationHandler;
-import top.jiaojinxin.log.audit.handler.SimpleLogAnnotationHandler;
+import top.jiaojinxin.log.audit.aspect.SimpleAuditLogAspect;
 
 /**
  * 审计日志自动装配
@@ -13,14 +12,20 @@ import top.jiaojinxin.log.audit.handler.SimpleLogAnnotationHandler;
  */
 public class AuditLogAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean(LogAnnotationHandler.class)
-    public LogAnnotationHandler<?> logAnnotationHandler() {
-        return new SimpleLogAnnotationHandler();
+    /**
+     * 审计日志自动装配
+     */
+    public AuditLogAutoConfiguration() {
     }
 
+    /**
+     * 审计日志切面
+     *
+     * @return top.jiaojinxin.log.audit.aspect.AuditLogAspect
+     */
     @Bean
-    public AuditLogAspect auditLogAspect(LogAnnotationHandler<?> logAnnotationHandler) {
-        return new AuditLogAspect(logAnnotationHandler);
+    @ConditionalOnMissingBean(AuditLogAspect.class)
+    public AuditLogAspect<?> auditLogAspect() {
+        return new SimpleAuditLogAspect();
     }
 }

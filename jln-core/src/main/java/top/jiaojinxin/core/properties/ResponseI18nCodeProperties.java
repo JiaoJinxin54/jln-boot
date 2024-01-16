@@ -20,6 +20,9 @@ public class ResponseI18nCodeProperties implements Serializable {
     @Serial
     private static final long serialVersionUID = -5716874899492609994L;
 
+    /**
+     * 前缀
+     */
     public static final String PREFIX = "jln.response.i18n-code";
 
     /**
@@ -43,7 +46,8 @@ public class ResponseI18nCodeProperties implements Serializable {
     private String failBiz = "respCode.failBiz";
 
     /**
-     * 无法获取国际化码描述时的默认值，默认：""
+     * 统一响应国际化码配置
      */
-    private String defaultMsg = "";
+    public ResponseI18nCodeProperties() {
+    }
 }

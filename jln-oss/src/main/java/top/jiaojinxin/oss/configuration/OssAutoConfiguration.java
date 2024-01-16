@@ -16,11 +16,16 @@ import top.jiaojinxin.oss.properties.OssProperties;
 public class OssAutoConfiguration {
 
     /**
+     * oss对象存储自动装配
+     */
+    public OssAutoConfiguration() {
+    }
+
+    /**
      * oss对象存储模板不存在时，注册默认实现
      *
      * @param ossProperties oss对象存储配置
-     * @return top.jiaojinxin.jln.oss.OssTemplate
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.oss.OssTemplate
      */
     @Bean
     @ConditionalOnMissingBean(OssTemplate.class)

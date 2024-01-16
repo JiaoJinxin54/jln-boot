@@ -23,6 +23,9 @@ public class OssProperties implements Serializable {
     @Serial
     private static final long serialVersionUID = 8794463162369064043L;
 
+    /**
+     * 前缀
+     */
     public static final String PREFIX = "jln.oss";
 
     /**
@@ -54,4 +57,10 @@ public class OssProperties implements Serializable {
      * 桶名称
      */
     private String bucketName;
+
+    /**
+     * oss对象存储配置
+     */
+    public OssProperties() {
+    }
 }

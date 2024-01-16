@@ -28,7 +28,6 @@ public class MultipartResp<T> extends Resp {
      * 构造方法
      *
      * @param data 响应数据值
-     * @author JiaoJinxin
      */
     protected MultipartResp(@NonNull Collection<T> data) {
         super(true, CoreUtil.getSuccessRespCode());
@@ -40,8 +39,7 @@ public class MultipartResp<T> extends Resp {
      *
      * @param data 响应数据值（集合）
      * @param <T>  响应数据类型
-     * @return top.jiaojinxin.core.model.resp.model.MultipartResp
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.core.model.resp.MultipartResp
      */
     public static <T> MultipartResp<T> ok(@NonNull Collection<T> data) {
         return new MultipartResp<>(data);
@@ -52,8 +50,7 @@ public class MultipartResp<T> extends Resp {
      *
      * @param data 响应数据值（数组）
      * @param <T>  响应数据类型
-     * @return top.jiaojinxin.core.model.resp.model.MultipartResp
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.core.model.resp.MultipartResp
      */
     public static <T> MultipartResp<T> ok(@NonNull T[] data) {
         return new MultipartResp<>(Arrays.stream(data).toList());

@@ -49,7 +49,6 @@ public class SignUtil {
      *
      * @param signDTO 签名参数
      * @return java.lang.String
-     * @author JiaoJinxin
      */
     public static String sign(SignDTO signDTO) {
         // 验证签名参数
@@ -68,7 +67,6 @@ public class SignUtil {
      * @param signDTO   签名参数
      * @param signValue 签名参数
      * @return boolean
-     * @author JiaoJinxin
      */
     public static boolean verify(SignDTO signDTO, String signValue) {
         // 验证签名参数
@@ -89,7 +87,6 @@ public class SignUtil {
      * @param data       签名参数
      * @param privateKey 私钥
      * @return byte[]
-     * @author JiaoJinxin
      */
     private static byte[] sign(byte[] data, PrivateKey privateKey) {
         try {
@@ -109,7 +106,6 @@ public class SignUtil {
      * @param signValue 签名值
      * @param publicKey 公钥
      * @return boolean
-     * @author JiaoJinxin
      */
     private static boolean verify(byte[] data, byte[] signValue, PublicKey publicKey) {
         try {
@@ -126,7 +122,6 @@ public class SignUtil {
      * 签名参数验证
      *
      * @param signDTO 签名参数
-     * @author JiaoJinxin
      */
     private static void validated(SignDTO signDTO) {
         if (signDTO != null
@@ -146,7 +141,6 @@ public class SignUtil {
      * 获取{@link Signature}
      *
      * @return java.security.Signature
-     * @author JiaoJinxin
      */
     private static Signature getSignature() {
         try {
@@ -161,7 +155,6 @@ public class SignUtil {
      *
      * @param privateKey 私钥
      * @return java.security.PrivateKey
-     * @author JiaoJinxin
      */
     private static PrivateKey privateKey(String privateKey) {
         KeySpec keySpec = new PKCS8EncodedKeySpec(decodeSecretKey(privateKey), RSA_ALGORITHM);
@@ -177,7 +170,6 @@ public class SignUtil {
      *
      * @param publicKey 公钥
      * @return java.security.PublicKey
-     * @author JiaoJinxin
      */
     private static PublicKey publicKey(String publicKey) {
         KeySpec keySpec = new X509EncodedKeySpec(decodeSecretKey(publicKey), RSA_ALGORITHM);
@@ -192,7 +184,6 @@ public class SignUtil {
      * 获取{@link KeyFactory}
      *
      * @return java.security.KeyFactory
-     * @author JiaoJinxin
      */
     private static KeyFactory keyFactory() {
         try {
@@ -207,7 +198,6 @@ public class SignUtil {
      *
      * @param secretKey 秘钥字符串
      * @return byte[]
-     * @author JiaoJinxin
      */
     private static byte[] decodeSecretKey(String secretKey) {
         return Base64.getDecoder().decode(secretKey);

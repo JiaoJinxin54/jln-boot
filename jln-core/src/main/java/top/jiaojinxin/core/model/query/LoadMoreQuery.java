@@ -8,6 +8,8 @@ import java.io.Serial;
 /**
  * 加载更多传输对象
  *
+ * @param <ID> ID泛型
+ * @param <C>  条件泛型
  * @author JiaoJinxin
  */
 @Getter
@@ -30,4 +32,10 @@ public class LoadMoreQuery<ID, C> implements Query {
      * 条件
      */
     private C condition;
+
+    /**
+     * 加载更多传输对象
+     */
+    public LoadMoreQuery() {
+    }
 }

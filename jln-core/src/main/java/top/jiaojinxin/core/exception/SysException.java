@@ -21,7 +21,6 @@ public class SysException extends BaseException {
      * @param code  国际化码code
      * @param args  国际化码描述参数
      * @param cause 具体异常
-     * @author JiaoJinxin
      */
     public SysException(@NonNull String code, @NonNull String[] args, @NonNull Throwable cause) {
         super(code, args, cause);
@@ -32,7 +31,6 @@ public class SysException extends BaseException {
      *
      * @param code  国际化码code
      * @param cause 具体异常
-     * @author JiaoJinxin
      */
     public SysException(@NonNull String code, @NonNull Throwable cause) {
         this(code, EMPTY_STRING_ARRAY, cause);
@@ -42,7 +40,6 @@ public class SysException extends BaseException {
      * 构造方法
      *
      * @param cause 具体异常
-     * @author JiaoJinxin
      */
     public SysException(@NonNull Throwable cause) {
         this(CoreUtil.getFailSys(), cause);

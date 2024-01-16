@@ -18,6 +18,9 @@ public abstract class BaseException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 7894977553068049218L;
 
+    /**
+     * 空字符串数组
+     */
     protected static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
@@ -31,7 +34,6 @@ public abstract class BaseException extends RuntimeException {
      * @param code  国际化码code
      * @param args  国际化码描述参数
      * @param cause 具体异常
-     * @author JiaoJinxin
      */
     public BaseException(@NonNull String code, @NonNull String[] args, @NonNull Throwable cause) {
         super(code, cause);
@@ -43,7 +45,6 @@ public abstract class BaseException extends RuntimeException {
      *
      * @param code  国际化码code
      * @param cause 具体异常
-     * @author JiaoJinxin
      */
     public BaseException(@NonNull String code, @NonNull Throwable cause) {
         this(code, EMPTY_STRING_ARRAY, cause);
@@ -54,7 +55,6 @@ public abstract class BaseException extends RuntimeException {
      *
      * @param code 国际化码code
      * @param args 国际化码描述参数
-     * @author JiaoJinxin
      */
     public BaseException(@NonNull String code, @NonNull String[] args) {
         super(code);
@@ -65,7 +65,6 @@ public abstract class BaseException extends RuntimeException {
      * 构造方法
      *
      * @param code 国际化码code
-     * @author JiaoJinxin
      */
     public BaseException(@NonNull String code) {
         this(code, EMPTY_STRING_ARRAY);

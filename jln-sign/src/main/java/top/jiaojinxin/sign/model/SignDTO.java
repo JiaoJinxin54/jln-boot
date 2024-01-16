@@ -51,6 +51,17 @@ public class SignDTO implements DTO {
      */
     private String salt;
 
+    /**
+     * 签名参数
+     */
+    public SignDTO() {
+    }
+
+    /**
+     * 签名参数转换为字节数组
+     *
+     * @return byte[]
+     */
     public byte[] getByteArray() {
         return this.toString().getBytes(StandardCharsets.UTF_8);
     }

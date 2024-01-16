@@ -46,4 +46,10 @@ public class SignExceptionCode implements Serializable {
      * 非法请求，默认：respCode.illegalRequest
      */
     private String illegalRequest = "respCode.illegalRequest";
+
+    /**
+     * 签名异常码
+     */
+    public SignExceptionCode() {
+    }
 }

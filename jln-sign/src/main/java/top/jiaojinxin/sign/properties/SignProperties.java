@@ -22,6 +22,9 @@ public class SignProperties implements Serializable {
     @Serial
     private static final long serialVersionUID = 4879394334941174281L;
 
+    /**
+     * 前缀
+     */
     public static final String PREFIX = "jln.sign";
 
     /**
@@ -39,4 +42,10 @@ public class SignProperties implements Serializable {
      */
     @NestedConfigurationProperty
     private SignExceptionCode exceptionCode = new SignExceptionCode();
+
+    /**
+     * 签名配置
+     */
+    public SignProperties() {
+    }
 }

@@ -13,7 +13,6 @@ public interface LogDetails extends Serializable {
      * 操作
      *
      * @return java.lang.String
-     * @author JiaoJinxin
      */
     String getOperation();
 }

@@ -26,7 +26,6 @@ public class SingletonResp<T> extends Resp {
      * 构造方法
      *
      * @param data 响应数据值
-     * @author JiaoJinxin
      */
     protected SingletonResp(@NonNull T data) {
         super(true, CoreUtil.getSuccessRespCode());
@@ -38,8 +37,7 @@ public class SingletonResp<T> extends Resp {
      *
      * @param data 响应数据值
      * @param <T>  响应数据类型
-     * @return top.jiaojinxin.core.model.resp.model.SingletonResp
-     * @author JiaoJinxin
+     * @return top.jiaojinxin.core.model.resp.SingletonResp
      */
     public static <T> SingletonResp<T> ok(@NonNull T data) {
         return new SingletonResp<>(data);
