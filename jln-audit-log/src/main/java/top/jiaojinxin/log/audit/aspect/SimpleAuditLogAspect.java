@@ -31,6 +31,7 @@ public class SimpleAuditLogAspect extends AuditLogAspect<SimpleAuditLogAspect.De
 
     @Override
     public void preHandle(@NonNull DefLogDetails logDetails, Log log, Object[] args) {
+        logDetails.setType(log.type());
         logDetails.setOperation(log.operation());
     }
 
@@ -65,5 +66,10 @@ public class SimpleAuditLogAspect extends AuditLogAspect<SimpleAuditLogAspect.De
          * 操作
          */
         private String operation;
+
+        /**
+         * 类型
+         */
+        private String type;
     }
 }

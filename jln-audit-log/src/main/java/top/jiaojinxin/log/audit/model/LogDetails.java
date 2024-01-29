@@ -15,4 +15,11 @@ public interface LogDetails extends Serializable {
      * @return java.lang.String
      */
     String getOperation();
+
+    /**
+     * 类型
+     *
+     * @return java.lang.String
+     */
+    String getType();
 }

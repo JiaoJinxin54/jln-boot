@@ -24,4 +24,11 @@ public @interface Log {
      * @return java.lang.String
      */
     String operation();
+
+    /**
+     * 类型
+     *
+     * @return java.lang.String
+     */
+    String type();
 }
