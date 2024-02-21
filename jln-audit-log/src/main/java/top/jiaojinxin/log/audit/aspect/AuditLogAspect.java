@@ -1,32 +1,29 @@
 package top.jiaojinxin.log.audit.aspect;
 
-import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 import top.jiaojinxin.log.audit.annotation.Log;
-import top.jiaojinxin.log.audit.model.LogDetails;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 日志切面
  *
- * @param <T> 日志详情泛型
  * @author JiaoJinxin
  */
 @Slf4j
 @Aspect
-public abstract class AuditLogAspect<T extends LogDetails> implements LogAnnotationHandler<T>, ApplicationEventPublisherAware {
+@RequiredArgsConstructor
+public class AuditLogAspect {
 
-    private ApplicationEventPublisher applicationEventPublisher;
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newVirtualThreadPerTaskExecutor();
 
-    /**
-     * 日志切面
-     */
-    public AuditLogAspect() {
-    }
+    private final List<LogHandler> logHandlers;
 
     /**
      * 环绕通知
@@ -38,24 +35,25 @@ public abstract class AuditLogAspect<T extends LogDetails> implements LogAnnotat
      */
     @Around("@annotation(log)")
     public Object around(ProceedingJoinPoint point, Log log) throws Throwable {
-        T logDetails = init();
-        preHandle(logDetails, log, point.getArgs());
+        // 获取可以处理的日志记录器
+        List<LogHandler> logHandlerList = logHandlers.stream().filter(logHandler -> logHandler.canHandle(log)).toList();
+        // 前置处理
+        logHandlerList.forEach(logHandler -> logHandler.preHandle(log, point.getArgs()));
         Object result = null;
         Throwable throwable = null;
         try {
             result = point.proceed();
+            return result;
         } catch (Throwable e) {
             throwable = e;
             throw e;
         } finally {
-            postHandle(logDetails, result, throwable);
-            applicationEventPublisher.publishEvent(logDetails);
+            final Object r = result;
+            final Throwable t = throwable;
+            logHandlerList.forEach(logHandler -> {
+                logHandler.postHandle(log, r, t);
+                EXECUTOR_SERVICE.submit(logHandler::publish);
+            });
         }
-        return result;
-    }
-
-    @Override
-    public void setApplicationEventPublisher(@NonNull ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
     }
 }
