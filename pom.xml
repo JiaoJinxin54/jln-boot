@@ -43,9 +43,10 @@
 
     <modules>
         <module>jln-dependencies</module>
-        <module>jln-core</module>
+        <module>jln-common</module>
         <module>jln-oss</module>
         <module>jln-sign</module>
         <module>jln-audit-log</module>
+        <module>jln-system</module>
     </modules>
 </project>

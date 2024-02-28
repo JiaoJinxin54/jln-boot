@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>top.jiaojinxin</groupId>
+        <artifactId>jln-system</artifactId>
+        <version>3.1.8.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jln-system-log</artifactId>
+    <description>jln微服务系统日志模块。</description>
+
+    <dependencies>
+        <!-- jln-util -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-util</artifactId>
+        </dependency>
+        <!-- jln-audit-log -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-audit-log</artifactId>
+        </dependency>
+        <!-- UserAgentUtils -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+        </dependency>
+        <!-- fastjson2 -->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+        </dependency>
+    </dependencies>
+</project>

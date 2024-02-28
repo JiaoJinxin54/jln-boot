@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 开发环境配置 -->
+    <springProfile name="dev">
+        <include resource="top/jiaojinxin/jln/system/log/logback/console-appender.xml"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <!-- 非开发环境配置 -->
+    <springProfile name="!dev">
+        <include resource="top/jiaojinxin/jln/system/log/logback/async-file-appender.xml"/>
+        <root level="INFO">
+            <appender-ref ref="ASYNC_FILE"/>
+        </root>
+    </springProfile>
+</configuration>

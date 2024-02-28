@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>top.jiaojinxin</groupId>
+        <artifactId>jln-system</artifactId>
+        <version>3.1.8.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jln-system-oss</artifactId>
+    <description>jln微服务系统对象存储模块。</description>
+
+    <dependencies>
+        <!-- jln-util -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-util</artifactId>
+        </dependency>
+        <!-- jln-oss -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-oss</artifactId>
+        </dependency>
+    </dependencies>
+</project>

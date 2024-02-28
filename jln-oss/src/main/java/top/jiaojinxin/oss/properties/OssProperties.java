@@ -9,8 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.io.Serial;
 import java.io.Serializable;
 
-import static top.jiaojinxin.oss.properties.OssProperties.PREFIX;
-
 /**
  * oss对象存储配置
  *
@@ -18,7 +16,7 @@ import static top.jiaojinxin.oss.properties.OssProperties.PREFIX;
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = PREFIX)
+@ConfigurationProperties(prefix = OssProperties.PREFIX)
 public class OssProperties implements Serializable {
     @Serial
     private static final long serialVersionUID = 8794463162369064043L;

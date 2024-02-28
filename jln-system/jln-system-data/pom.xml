@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>top.jiaojinxin</groupId>
+        <artifactId>jln-system</artifactId>
+        <version>3.1.8.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jln-system-data</artifactId>
+    <description>数据模块（基于MybatisFlex实现）</description>
+
+    <dependencies>
+        <!-- jln-util -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-util</artifactId>
+        </dependency>
+        <!-- mybatis-flex-spring-boot-starter -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis-spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- mybatis-spring -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <!-- mybatis-flex-processor -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-processor</artifactId>
+        </dependency>
+        <!-- druid-spring-boot-3-starter -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>

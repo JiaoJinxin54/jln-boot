@@ -14,10 +14,10 @@
     <description>签名模块。</description>
 
     <dependencies>
-        <!-- jln-core -->
+        <!-- jln-exception -->
         <dependency>
             <groupId>top.jiaojinxin</groupId>
-            <artifactId>jln-core</artifactId>
+            <artifactId>jln-exception</artifactId>
         </dependency>
     </dependencies>
 </project>

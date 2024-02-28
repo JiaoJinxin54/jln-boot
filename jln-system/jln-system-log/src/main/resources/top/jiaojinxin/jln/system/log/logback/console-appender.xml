@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+
+    <springProperty name="CONSOLE_LOG_PATTERN" source="jln.log.logback.console.pattern"
+                    defaultValue="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr(%traceId){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"/>
+    <springProperty name="CONSOLE_LOG_CHARSET" source="jln.log.logback.console.charset" defaultValue="UTF-8"/>
+
+    <appender name="CONSOLE" class="top.jiaojinxin.system.log.logback.appender.LogbackConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="top.jiaojinxin.system.log.logback.layout.LogbackPatternLayoutExtend">
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            </layout>
+            <charset>${CONSOLE_LOG_CHARSET}</charset>
+        </encoder>
+    </appender>
+</included>

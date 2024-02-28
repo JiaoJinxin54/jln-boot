@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <!-- 应用名称 -->
+    <springProperty name="SPRING_APPLICATION_NAME" source="spring.application.name" defaultValue="app"/>
+    <!-- 日志文件基础路径 -->
+    <springProperty name="BASE_PATH" source="jln.log.logback.file.base-path" defaultValue="/opt/logs"/>
+    <!-- 日志文件项目路径 -->
+    <springProperty name="PROJECT_NAME" source="jln.log.project" defaultValue="${SPRING_APPLICATION_NAME}"/>
+    <!-- 日志文件模块路径 -->
+    <springProperty name="MODEL_NAME" source="jln.log.model" defaultValue="${SPRING_APPLICATION_NAME}"/>
+    <!-- 日志文件路径 -->
+    <property name="PATH" value="${BASE_PATH}/${PROJECT_NAME}/${MODEL_NAME}"/>
+    <!-- 单文件最大容量 -->
+    <springProperty name="MAX_FILE_SIZE" source="jln.log.logback.file.rolling-policy.max-file-size"
+                    defaultValue="500MB"/>
+    <!-- 文件总容量 -->
+    <springProperty name="TOTAL_SIZE_CAP" source="jln.log.logback.file.rolling-policy.total-size-cap"
+                    defaultValue="20GB"/>
+    <!-- 最大保留文件时间数 -->
+    <springProperty name="MAX_HISTORY" source="jln.log.logback.file.rolling-policy.max-history" defaultValue="15"/>
+    <!-- BlockingQueue最大容量 -->
+    <springProperty name="QUEUE_SIZE" source="jln.log.logback.file.async.queue-size" defaultValue="256"/>
+    <springProperty name="DISCARDING_THRESHOLD" source="jln.log.logback.file.async.discarding-threshold"
+                    defaultValue="0"/>
+    <!-- 是否包含调用者的信息 -->
+    <springProperty name="INCLUDE_CALLER_DATA" source="jln.log.logback.file.async.include-caller-data"
+                    defaultValue="true"/>
+    <springProperty name="FILE_LOG_PATTERN" source="jln.log.logback.file.pattern"
+                    defaultValue="%d{yyyy-MM-dd HH:mm:ss.SSS}|%p|%traceId|%t|%c[%L] : %m%n"/>
+    <springProperty name="FILE_LOG_CHARSET" source="jln.log.logback.file.charset" defaultValue="UTF-8"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="top.jiaojinxin.system.log.logback.layout.LogbackPatternLayoutExtend">
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+            </layout>
+            <charset>${FILE_LOG_CHARSET}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${PATH}/${SPRING_APPLICATION_NAME}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 单文件最大容量，超过则增加%i的值 -->
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <!-- 总文件容量 -->
+            <totalSizeCap>${TOTAL_SIZE_CAP}</totalSizeCap>
+            <!-- 最大保留文件时间数，按天分割代表几天，小时分割则代表几个小时 -->
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ASYNC_FILE" class="top.jiaojinxin.system.log.logback.appender.LogbackAsyncAppender">
+        <!-- BlockingQueue最大容量，默认为256，要看具体业务规模来调整此参数 -->
+        <queueSize>${QUEUE_SIZE}</queueSize>
+        <!-- 不丢弃任何日志，设置该值为0。默认情况下，当BlockingQueue还有20%容量，他将丢弃TRACE、DEBUG和INFO级别的event，只保留WARN和ERROR级别的event -->
+        <discardingThreshold>${DISCARDING_THRESHOLD}</discardingThreshold>
+        <!-- 是否包含调用者的信息(方法名及行号)，AsyncAppender默认为false，只有一些获取代价较低的数据，如线程名称，MDC值才会被保留。如果设置为true，就会包含caller data -->
+        <includeCallerData>${INCLUDE_CALLER_DATA}</includeCallerData>
+        <appender-ref ref="FILE"/>
+    </appender>
+</included>

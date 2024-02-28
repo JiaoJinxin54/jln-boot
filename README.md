@@ -22,13 +22,13 @@
 
 ## 三 快速开始
 
-示例：引用`jln-core`
+示例：引用`jln-sign`
 
 ```
 <dependencies>
     <dependency>
         <groupId>top.jiaojinxin</groupId>
-        <artifactId>jln-core</artifactId>
+        <artifactId>jln-sign</artifactId>
         <version>3.1.8.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
@@ -40,7 +40,7 @@
 <dependencies>
     <dependency>
         <groupId>top.jiaojinxin</groupId>
-        <artifactId>jln-core</artifactId>
+        <artifactId>jln-sign</artifactId>
     </dependency>
 </dependencies>
 
