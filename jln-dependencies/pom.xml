@@ -51,13 +51,14 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
 
+        <jln.version>3.1.8.0-SNAPSHOT</jln.version>
+
         <hutool.version>5.8.25</hutool.version>
         <aws-java-sdk-s3.version>1.12.429</aws-java-sdk-s3.version>
         <mybatis-flex.version>1.7.6</mybatis-flex.version>
         <mybatis-spring.version>3.0.3</mybatis-spring.version>
         <druid-spring-boot-3-starter.version>1.2.18</druid-spring-boot-3-starter.version>
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
-        <fastjson2.version>2.0.38</fastjson2.version>
         <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     </properties>
 
@@ -67,73 +68,73 @@
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-properties</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-i18n -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-i18n</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-model -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-model</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-exception -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-exception</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-util -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-util</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-oss -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-oss</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-sign -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-sign</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-audit-log -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-audit-log</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-system-log -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-system-log</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-system-oss -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-system-oss</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-system-security -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-system-security</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
             <!-- jln-system-data -->
             <dependency>
                 <groupId>top.jiaojinxin</groupId>
                 <artifactId>jln-system-data</artifactId>
-                <version>${project.version}</version>
+                <version>${jln.version}</version>
             </dependency>
 
             <!-- hutool -->
@@ -175,12 +176,6 @@
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${UserAgentUtils.version}</version>
-            </dependency>
-            <!-- fastjson2 -->
-            <dependency>
-                <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2</artifactId>
-                <version>${fastjson2.version}</version>
             </dependency>
             <!-- transmittable-thread-local -->
             <dependency>
