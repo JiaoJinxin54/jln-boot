@@ -32,7 +32,7 @@ public class PropertiesAutoConfiguration {
      * @return org.springframework.beans.factory.SmartInitializingSingleton
      */
     @Bean
-    public SmartInitializingSingleton respCodeSmartInitializingSingleton(
+    public SmartInitializingSingleton propertiesSmartInitializingSingleton(
             RequestHeaderProperties requestHeaderProperties,
             ResponseI18nCodeProperties responseI18nCodeProperties) {
         return () -> {

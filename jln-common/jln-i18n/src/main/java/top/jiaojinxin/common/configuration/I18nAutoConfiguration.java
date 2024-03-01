@@ -39,7 +39,7 @@ public class I18nAutoConfiguration {
      * @return org.springframework.beans.factory.SmartInitializingSingleton
      */
     @Bean
-    public SmartInitializingSingleton respCodeSmartInitializingSingleton(I18nCodeHolder holder) {
+    public SmartInitializingSingleton i18nSmartInitializingSingleton(I18nCodeHolder holder) {
         return () -> I18nManager.setI18nCodeHolder(holder);
     }
 }
