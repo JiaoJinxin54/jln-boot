@@ -7,9 +7,9 @@ import top.jiaojinxin.common.model.DTO;
 
 import java.io.Serial;
 
-import static top.jiaojinxin.common.util.I18nManager.getRespCode;
-import static top.jiaojinxin.common.util.PropertiesManager.getFail;
-import static top.jiaojinxin.common.util.PropertiesManager.getSuccess;
+import static top.jiaojinxin.util.I18nManager.getRespCode;
+import static top.jiaojinxin.util.PropertiesManager.getFail;
+import static top.jiaojinxin.util.PropertiesManager.getSuccess;
 
 /**
  * 顶级数据响应对象

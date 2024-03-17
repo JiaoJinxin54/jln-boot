@@ -7,13 +7,11 @@ import com.mybatisflex.spring.boot.MyBatisFlexCustomizer;
 import com.mybatisflex.spring.boot.MybatisFlexAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
-import top.jiaojinxin.data.entity.BaseEntity;
+import top.jiaojinxin.system.data.entity.BaseEntity;
 import top.jiaojinxin.util.CurrUserUtil;
+import top.jiaojinxin.system.data.dict.YesNo;
 
 import java.time.LocalDateTime;
-
-import static top.jiaojinxin.data.dict.YesNo.NO;
-import static top.jiaojinxin.data.dict.YesNo.YES;
 
 /**
  * MybatisFlex相关全局配置
@@ -43,8 +41,8 @@ public class DataMybatisFlexAutoConfiguration {
         return flexGlobalConfig -> {
             flexGlobalConfig.registerInsertListener(insertListener(), BaseEntity.class);
             flexGlobalConfig.registerUpdateListener(updateListener(), BaseEntity.class);
-            flexGlobalConfig.setNormalValueOfLogicDelete(NO);
-            flexGlobalConfig.setDeletedValueOfLogicDelete(YES);
+            flexGlobalConfig.setNormalValueOfLogicDelete(YesNo.NO);
+            flexGlobalConfig.setDeletedValueOfLogicDelete(YesNo.YES);
         };
     }
 

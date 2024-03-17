@@ -8,9 +8,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.jiaojinxin.common.exception.BizException;
-import top.jiaojinxin.common.properties.SecurityProperties;
-import top.jiaojinxin.common.properties.SignProperties;
-import top.jiaojinxin.common.util.PropertiesManager;
+import top.jiaojinxin.properties.SecurityProperties;
+import top.jiaojinxin.util.HttpServletUtil;
+import top.jiaojinxin.util.PropertiesManager;
 
 import java.time.Duration;
 import java.util.regex.Pattern;
@@ -27,14 +27,14 @@ public class IdempotentHandlerInterceptor implements HandlerInterceptor {
 
     private final SecurityIdempotentCache securityIdempotentCache;
 
-    private final SignProperties signProperties;
-
     private final SecurityProperties securityProperties;
 
     @Override
-    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
+    public boolean preHandle(@NonNull HttpServletRequest request,
+                             @NonNull HttpServletResponse response,
+                             @NonNull Object handler) {
         if (handler instanceof HandlerMethod) {
-            return doIdempotentVerification(request);
+            return doIdempotentVerification();
         }
         return true;
     }
@@ -42,24 +42,21 @@ public class IdempotentHandlerInterceptor implements HandlerInterceptor {
     /**
      * 执行幂等验证
      *
-     * @param request {@link HttpServletRequest}
      * @return boolean
      */
-    private boolean doIdempotentVerification(HttpServletRequest request) {
+    private boolean doIdempotentVerification() {
         // 接口防刷：时间戳验证
-        timestampValidated(request);
+        timestampValidated();
         // 接口防刷：唯一键验证
-        uidValidated(request);
+        uidValidated();
         return true;
     }
 
     /**
      * 接口防刷之时间戳验证
-     *
-     * @param request {@link HttpServletRequest}
      */
-    private void timestampValidated(HttpServletRequest request) {
-        String idempotentTimestamp = PropertiesManager.getHeaderTimestamp(request);
+    private void timestampValidated() {
+        String idempotentTimestamp = HttpServletUtil.getRequestHeaderTimestamp();
         if (!StringUtils.hasText(idempotentTimestamp) || !TIMESTAMP_PATTERN.matcher(idempotentTimestamp).find()) {
             throwBizException();
         }
@@ -79,11 +76,9 @@ public class IdempotentHandlerInterceptor implements HandlerInterceptor {
 
     /**
      * 接口防刷之唯一键验证
-     *
-     * @param request {@link HttpServletRequest}
      */
-    private void uidValidated(HttpServletRequest request) {
-        String uid = PropertiesManager.getHeaderUid(request);
+    private void uidValidated() {
+        String uid = HttpServletUtil.getRequestHeaderUid();
         if (!StringUtils.hasText(uid)) {
             throwBizException();
         }
@@ -98,6 +93,6 @@ public class IdempotentHandlerInterceptor implements HandlerInterceptor {
      * 抛出非法请求异常
      */
     private void throwBizException() {
-        throw new BizException(this.signProperties.getExceptionCode().getIllegalRequest());
+        throw new BizException(PropertiesManager.getIllegalRequest());
     }
 }

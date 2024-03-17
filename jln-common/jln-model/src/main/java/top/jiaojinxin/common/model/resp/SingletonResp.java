@@ -5,8 +5,8 @@ import lombok.NonNull;
 
 import java.io.Serial;
 
-import static top.jiaojinxin.common.util.I18nManager.getRespCode;
-import static top.jiaojinxin.common.util.PropertiesManager.getSuccess;
+import static top.jiaojinxin.util.I18nManager.getRespCode;
+import static top.jiaojinxin.util.PropertiesManager.getSuccess;
 
 /**
  * 单值响应对象

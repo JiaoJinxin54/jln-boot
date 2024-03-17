@@ -7,11 +7,11 @@ import eu.bitwalker.useragentutils.UserAgent;
 import eu.bitwalker.useragentutils.Version;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import top.jiaojinxin.common.util.I18nManager;
+import top.jiaojinxin.util.I18nManager;
 import top.jiaojinxin.log.audit.annotation.Log;
 import top.jiaojinxin.log.audit.aspect.LogHandler;
 import top.jiaojinxin.system.log.model.AuditLogDetails;
-import top.jiaojinxin.system.util.LogUtil;
+import top.jiaojinxin.util.LogUtil;
 import top.jiaojinxin.util.CurrUserUtil;
 import top.jiaojinxin.util.HttpServletUtil;
 

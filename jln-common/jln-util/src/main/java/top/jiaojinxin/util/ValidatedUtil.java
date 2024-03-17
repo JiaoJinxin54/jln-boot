@@ -6,8 +6,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.validation.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
 import top.jiaojinxin.common.exception.BizException;
-import top.jiaojinxin.common.util.I18nManager;
-import top.jiaojinxin.common.util.PropertiesManager;
 
 import java.util.Optional;
 import java.util.Set;

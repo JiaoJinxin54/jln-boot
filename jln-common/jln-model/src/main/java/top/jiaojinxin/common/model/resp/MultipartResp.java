@@ -7,8 +7,8 @@ import java.io.Serial;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static top.jiaojinxin.common.util.I18nManager.getRespCode;
-import static top.jiaojinxin.common.util.PropertiesManager.getSuccess;
+import static top.jiaojinxin.util.I18nManager.getRespCode;
+import static top.jiaojinxin.util.PropertiesManager.getSuccess;
 
 /**
  * 多值响应对象

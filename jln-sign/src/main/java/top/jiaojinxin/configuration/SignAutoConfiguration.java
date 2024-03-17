@@ -1,19 +1,19 @@
 package top.jiaojinxin.configuration;
 
+import cn.hutool.crypto.KeyUtil;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import top.jiaojinxin.sign.ClientPublicKeyHolder;
-import top.jiaojinxin.common.properties.SignProperties;
+import top.jiaojinxin.sign.ClientSecretKeyHolder;
 import top.jiaojinxin.util.SignUtil;
+
+import java.security.KeyPair;
 
 /**
  * 签名自动装配
  *
  * @author JiaoJinxin
  */
-@EnableConfigurationProperties(SignProperties.class)
 public class SignAutoConfiguration {
 
     /**
@@ -23,28 +23,35 @@ public class SignAutoConfiguration {
     }
 
     /**
-     * 默认的{@link ClientPublicKeyHolder}实现
+     * 默认的{@link ClientSecretKeyHolder}实现
      *
      * @return top.jiaojinxin.sign.ClientPublicKeyHolder
      */
     @Bean
-    @ConditionalOnMissingBean(ClientPublicKeyHolder.class)
-    public ClientPublicKeyHolder clientPublicKeyHolder() {
-        return clientCode -> "";
+    @ConditionalOnMissingBean(ClientSecretKeyHolder.class)
+    public ClientSecretKeyHolder clientSecretKeyHolder() {
+        KeyPair keyPair = KeyUtil.generateKeyPair(SignUtil.SIGNATURE_ALGORITHM.getValue());
+        return new ClientSecretKeyHolder() {
+            @Override
+            public byte[] privateKey(String clientCode) {
+                return keyPair.getPrivate().getEncoded();
+            }
+
+            @Override
+            public byte[] publicKey(String clientCode) {
+                return keyPair.getPublic().getEncoded();
+            }
+        };
     }
 
     /**
-     * 将{@link SignProperties}与{@link ClientPublicKeyHolder}注入静态工具类，以便静态调用
+     * 将{@link ClientSecretKeyHolder}注入静态工具类，以便静态调用
      *
-     * @param signProperties        {@link SignProperties}
-     * @param clientPublicKeyHolder {@link ClientPublicKeyHolder}
+     * @param clientSecretKeyHolder {@link ClientSecretKeyHolder}
      * @return org.springframework.beans.factory.SmartInitializingSingleton
      */
     @Bean
-    public SmartInitializingSingleton signSmartInitializingSingleton(SignProperties signProperties, ClientPublicKeyHolder clientPublicKeyHolder) {
-        return () -> {
-            SignUtil.setSignProperties(signProperties);
-            SignUtil.setClientPublicKeyHolder(clientPublicKeyHolder);
-        };
+    public SmartInitializingSingleton signSmartInitializingSingleton(ClientSecretKeyHolder clientSecretKeyHolder) {
+        return () -> SignUtil.setClientSecretKeyHolder(clientSecretKeyHolder);
     }
 }

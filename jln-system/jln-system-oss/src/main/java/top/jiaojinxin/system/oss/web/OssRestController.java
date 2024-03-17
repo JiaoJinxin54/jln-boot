@@ -27,7 +27,7 @@ import java.time.LocalDate;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${jln.oss.base-path:/oss}")
+@RequestMapping("${jln.oss.web.base-path:/oss}")
 public class OssRestController {
 
     private final OssTemplate ossTemplate;
@@ -38,7 +38,7 @@ public class OssRestController {
      * @param dto 参数
      * @return java.lang.String
      */
-    @PostMapping("${jln.oss.generate-upload:/generate/upload}")
+    @PostMapping("${jln.oss.web.generate-upload:/generate/upload}")
     public UploadVO generateUpload(@RequestBody GenerateUploadQuery dto) {
         // 参数验证
         ValidatedUtil.validated(dto);
@@ -60,7 +60,7 @@ public class OssRestController {
         return vo;
     }
 
-    @PostMapping("${jln.oss.generate-download:/generate/download}")
+    @PostMapping("${jln.oss.web.generate-download:/generate/download}")
     public DownloadVO generateDownload(@RequestBody GenerateDownloadQuery dto) {
         // 参数验证
         ValidatedUtil.validated(dto);

@@ -1,7 +1,7 @@
 package top.jiaojinxin.common.exception;
 
 import lombok.NonNull;
-import top.jiaojinxin.common.util.PropertiesManager;
+import top.jiaojinxin.util.PropertiesManager;
 
 import java.io.Serial;
 

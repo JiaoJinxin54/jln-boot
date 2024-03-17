@@ -18,5 +18,10 @@
             <groupId>top.jiaojinxin</groupId>
             <artifactId>jln-exception</artifactId>
         </dependency>
+        <!-- hutool-crypto -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-crypto</artifactId>
+        </dependency>
     </dependencies>
 </project>

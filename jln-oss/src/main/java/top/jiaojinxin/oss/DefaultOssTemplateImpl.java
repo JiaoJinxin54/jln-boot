@@ -14,7 +14,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.http.HttpMethod;
-import top.jiaojinxin.oss.properties.OssProperties;
+import top.jiaojinxin.properties.OssProperties;
 
 import java.io.File;
 import java.io.IOException;

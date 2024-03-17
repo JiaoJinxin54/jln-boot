@@ -3,7 +3,7 @@ package top.jiaojinxin.common.exception;
 import lombok.Getter;
 import lombok.NonNull;
 import top.jiaojinxin.common.i18n.I18nCode;
-import top.jiaojinxin.common.util.I18nManager;
+import top.jiaojinxin.util.I18nManager;
 
 import java.io.Serial;
 

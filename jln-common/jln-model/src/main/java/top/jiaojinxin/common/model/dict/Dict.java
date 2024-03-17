@@ -1,6 +1,6 @@
 package top.jiaojinxin.common.model.dict;
 
-import top.jiaojinxin.common.util.I18nManager;
+import top.jiaojinxin.util.I18nManager;
 
 /**
  * 枚举抽象

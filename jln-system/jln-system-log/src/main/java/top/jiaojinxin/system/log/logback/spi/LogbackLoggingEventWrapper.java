@@ -7,7 +7,7 @@ import ch.qos.logback.classic.spi.LoggerContextVO;
 import cn.hutool.core.util.StrUtil;
 import org.slf4j.Marker;
 import org.slf4j.event.KeyValuePair;
-import top.jiaojinxin.system.util.LogUtil;
+import top.jiaojinxin.util.LogUtil;
 
 import java.util.List;
 import java.util.Map;

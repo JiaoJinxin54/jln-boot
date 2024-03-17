@@ -1,2 +1,2 @@
-top.jiaojinxin.system.configuration.SystemLogAutoConfiguration
-top.jiaojinxin.system.configuration.LogbackConfiguration
+top.jiaojinxin.configuration.SystemLogAutoConfiguration
+top.jiaojinxin.configuration.LogbackConfiguration

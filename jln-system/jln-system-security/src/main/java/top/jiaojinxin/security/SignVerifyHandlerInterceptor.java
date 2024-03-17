@@ -1,5 +1,7 @@
 package top.jiaojinxin.security;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
@@ -7,10 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.jiaojinxin.common.exception.BizException;
-import top.jiaojinxin.common.properties.SignProperties;
-import top.jiaojinxin.common.util.PropertiesManager;
 import top.jiaojinxin.sign.SignDTO;
+import top.jiaojinxin.util.HttpServletUtil;
+import top.jiaojinxin.util.PropertiesManager;
 import top.jiaojinxin.util.SignUtil;
+
+import java.util.Arrays;
 
 /**
  * 签名验证拦截器
@@ -20,47 +24,50 @@ import top.jiaojinxin.util.SignUtil;
 @RequiredArgsConstructor
 public class SignVerifyHandlerInterceptor implements HandlerInterceptor {
 
-    private final SignProperties signProperties;
-
     @Override
-    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
+    public boolean preHandle(@NonNull HttpServletRequest request,
+                             @NonNull HttpServletResponse response,
+                             @NonNull Object handler) {
         if (handler instanceof HandlerMethod) {
-            return doSignVerify(request);
+            return doSignVerify();
         }
         return true;
     }
 
     /**
      * 执行验签
-     *
-     * @param request {@link HttpServletRequest}
      */
-    private boolean doSignVerify(HttpServletRequest request) {
+    private boolean doSignVerify() {
         // 构建签名参数
-        SignDTO signDTO = generateSignDTO(request);
+        SignDTO signDTO = generateSignDTO();
         // 获取签名值
-        String signValue = PropertiesManager.getHeaderSign(request);
+        String signValue = HttpServletUtil.getRequestHeaderSign();
         // 验证签名
         if (SignUtil.verify(signDTO, signValue)) {
             return true;
         }
-        throw new BizException(signProperties.getExceptionCode().getIllegalRequest());
+        throw new BizException(PropertiesManager.getIllegalRequest());
     }
 
     /**
      * 构建签名参数
      *
-     * @param request {@link HttpServletRequest}
      * @return top.jiaojinxin.jln.sign.model.SignDTO
      */
-    private SignDTO generateSignDTO(HttpServletRequest request) {
+    private SignDTO generateSignDTO() {
         SignDTO signDTO = new SignDTO();
-        signDTO.setClientCode(PropertiesManager.getHeaderClientCode(request));
-        signDTO.setTimestamp(PropertiesManager.getHeaderTimestamp(request));
-        signDTO.setUid(PropertiesManager.getHeaderUid(request));
-        signDTO.setContent(PropertiesManager.getAttributeEncryptedParameterContent(request));
-        signDTO.setAlgorithm(PropertiesManager.getHeaderAlgorithm(request));
-        signDTO.setSalt(PropertiesManager.getHeaderSalt(request));
+        signDTO.setClientCode(HttpServletUtil.getRequestHeaderClientCode());
+        signDTO.setTimestamp(HttpServletUtil.getRequestHeaderTimestamp());
+        signDTO.setUid(HttpServletUtil.getRequestHeaderUid());
+        signDTO.setContent(HttpServletUtil.getRequestAttributeEncryptedParameterContent());
+        signDTO.setSalt(HttpServletUtil.getRequestHeaderSalt());
+        String algorithm;
+        if (StrUtil.isNotBlank(algorithm = HttpServletUtil.getRequestHeaderAlgorithm())
+                && Arrays.stream(SymmetricAlgorithm.values())
+                .map(SymmetricAlgorithm::getValue)
+                .anyMatch(value -> StrUtil.equals(value, algorithm))) {
+            signDTO.setAlgorithm(SymmetricAlgorithm.valueOf(algorithm));
+        }
         return signDTO;
     }
 }

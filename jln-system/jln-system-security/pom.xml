@@ -13,6 +13,11 @@
     <description>接口安全模块。</description>
 
     <dependencies>
+        <!-- jln-util -->
+        <dependency>
+            <groupId>top.jiaojinxin</groupId>
+            <artifactId>jln-util</artifactId>
+        </dependency>
         <!-- jln-sign -->
         <dependency>
             <groupId>top.jiaojinxin</groupId>
