@@ -1,7 +1,5 @@
 package top.jiaojinxin.security;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
@@ -13,8 +11,6 @@ import top.jiaojinxin.sign.SignDTO;
 import top.jiaojinxin.util.HttpServletUtil;
 import top.jiaojinxin.util.PropertiesManager;
 import top.jiaojinxin.util.SignUtil;
-
-import java.util.Arrays;
 
 /**
  * 签名验证拦截器
@@ -61,13 +57,7 @@ public class SignVerifyHandlerInterceptor implements HandlerInterceptor {
         signDTO.setUid(HttpServletUtil.getRequestHeaderUid());
         signDTO.setContent(HttpServletUtil.getRequestAttributeEncryptedParameterContent());
         signDTO.setSalt(HttpServletUtil.getRequestHeaderSalt());
-        String algorithm;
-        if (StrUtil.isNotBlank(algorithm = HttpServletUtil.getRequestHeaderAlgorithm())
-                && Arrays.stream(SymmetricAlgorithm.values())
-                .map(SymmetricAlgorithm::getValue)
-                .anyMatch(value -> StrUtil.equals(value, algorithm))) {
-            signDTO.setAlgorithm(SymmetricAlgorithm.valueOf(algorithm));
-        }
+        signDTO.setAlgorithm(HttpServletUtil.getRequestHeaderAlgorithm());
         return signDTO;
     }
 }

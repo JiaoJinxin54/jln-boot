@@ -1,6 +1,5 @@
 package top.jiaojinxin.sign;
 
-import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -50,7 +49,7 @@ public class SignDTO implements DTO {
     /**
      * 加密算法，用于配合加密算法盐值对参数文本进行加密
      */
-    private SymmetricAlgorithm algorithm;
+    private String algorithm;
 
     /**
      * 签名参数

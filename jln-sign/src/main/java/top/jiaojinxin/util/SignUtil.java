@@ -1,16 +1,15 @@
 package top.jiaojinxin.util;
 
-import cn.hutool.core.util.ObjUtil;
+import cn.hutool.crypto.KeyUtil;
+import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.Sign;
 import cn.hutool.crypto.asymmetric.SignAlgorithm;
 import lombok.Setter;
-import org.springframework.util.StringUtils;
-import top.jiaojinxin.common.exception.BizException;
 import top.jiaojinxin.sign.ClientSecretKeyHolder;
 import top.jiaojinxin.sign.SignDTO;
 
+import java.security.KeyPair;
 import java.util.Base64;
-import java.util.regex.Pattern;
 
 /**
  * 签名工具类
@@ -19,9 +18,10 @@ import java.util.regex.Pattern;
  */
 public class SignUtil {
 
-    private static final Pattern TIMESTAMP_PATTERN = Pattern.compile("^\\d+$");
-
-    public static final SignAlgorithm SIGNATURE_ALGORITHM = SignAlgorithm.SHA512withRSA;
+    /**
+     * 默认的签名密钥
+     */
+    private static final SignAlgorithm DEFAULT_SIGN_ALGORITHM = SignAlgorithm.SHA512withRSA;
 
     @Setter
     private static ClientSecretKeyHolder clientSecretKeyHolder;
@@ -36,12 +36,10 @@ public class SignUtil {
      * @return java.lang.String
      */
     public static String sign(SignDTO signDTO) {
-        // 验证签名参数
-        validated(signDTO);
         // 获取客户端私钥
-        byte[] privateKey = SignUtil.clientSecretKeyHolder.privateKey(signDTO.getClientCode());
+        String privateKeyStr = SignUtil.clientSecretKeyHolder.privateKey(signDTO.getClientCode());
         // 执行签名
-        byte[] result = getSign(privateKey, null).sign(signDTO.toString());
+        byte[] result = getSign(privateKeyStr, null).sign(signDTO.toString());
         // 编码为字符串
         return Base64.getEncoder().encodeToString(result);
     }
@@ -54,33 +52,45 @@ public class SignUtil {
      * @return boolean
      */
     public static boolean verify(SignDTO signDTO, String signValue) {
-        // 验证签名参数
-        validated(signDTO);
         // 获取客户端公钥
-        byte[] publicKey = SignUtil.clientSecretKeyHolder.publicKey(signDTO.getClientCode());
+        String publicKeyStr = SignUtil.clientSecretKeyHolder.publicKey(signDTO.getClientCode());
         // 获取签名值
         byte[] signValueByteArray = Base64.getDecoder().decode(signValue);
         // 执行验签
-        return getSign(null, publicKey).verify(signDTO.getByteArray(), signValueByteArray);
+        return getSign(null, publicKeyStr).verify(signDTO.getByteArray(), signValueByteArray);
     }
 
     /**
-     * 签名参数验证
+     * 加密
      *
-     * @param signDTO 签名参数
+     * @param clientCode 客户端编码
+     * @param data       待加密数据
+     * @param keyType    加密密钥类型
+     * @return java.lang.String
      */
-    private static void validated(SignDTO signDTO) {
-        if (signDTO != null
-                && StringUtils.hasText(signDTO.getClientCode())
-                && StringUtils.hasText(signDTO.getTimestamp())
-                && TIMESTAMP_PATTERN.matcher(signDTO.getTimestamp()).find()
-                && StringUtils.hasText(signDTO.getUid())
-                && StringUtils.hasText(signDTO.getContent())
-                && StringUtils.hasText(signDTO.getSalt())
-                && ObjUtil.isNotNull(signDTO.getAlgorithm())) {
-            return;
-        }
-        throw new BizException(PropertiesManager.getIllegalRequest());
+    public static String encrypt(String clientCode, String data, KeyType keyType) {
+        return SignUtil.clientSecretKeyHolder.rsa(clientCode).encryptBase64(data, keyType);
+    }
+
+    /**
+     * 解密
+     *
+     * @param clientCode 客户端编码
+     * @param data       待解密数据
+     * @param keyType    解密密钥类型
+     * @return java.lang.String
+     */
+    public static String decrypt(String clientCode, String data, KeyType keyType) {
+        return SignUtil.clientSecretKeyHolder.rsa(clientCode).decryptStr(data, keyType);
+    }
+
+    /**
+     * 构建密钥对
+     *
+     * @return java.security.KeyPair
+     */
+    public static KeyPair generateKeyPair() {
+        return KeyUtil.generateKeyPair(DEFAULT_SIGN_ALGORITHM.getValue());
     }
 
     /**
@@ -90,7 +100,7 @@ public class SignUtil {
      * @param publicKey  公钥
      * @return cn.hutool.crypto.asymmetric.Sign
      */
-    private static Sign getSign(byte[] privateKey, byte[] publicKey) {
-        return cn.hutool.crypto.SignUtil.sign(SIGNATURE_ALGORITHM, privateKey, publicKey);
+    private static Sign getSign(String privateKey, String publicKey) {
+        return cn.hutool.crypto.SignUtil.sign(DEFAULT_SIGN_ALGORITHM, privateKey, publicKey);
     }
 }

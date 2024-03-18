@@ -30,16 +30,16 @@ public class SignAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(ClientSecretKeyHolder.class)
     public ClientSecretKeyHolder clientSecretKeyHolder() {
-        KeyPair keyPair = KeyUtil.generateKeyPair(SignUtil.SIGNATURE_ALGORITHM.getValue());
+        KeyPair keyPair = SignUtil.generateKeyPair();
         return new ClientSecretKeyHolder() {
             @Override
-            public byte[] privateKey(String clientCode) {
-                return keyPair.getPrivate().getEncoded();
+            public String privateKey(String clientCode) {
+                return KeyUtil.toBase64(keyPair.getPrivate());
             }
 
             @Override
-            public byte[] publicKey(String clientCode) {
-                return keyPair.getPublic().getEncoded();
+            public String publicKey(String clientCode) {
+                return KeyUtil.toBase64(keyPair.getPublic());
             }
         };
     }
