@@ -1,5 +1,6 @@
 package top.jiaojinxin.security;
 
+import cn.hutool.crypto.asymmetric.KeyType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
@@ -56,7 +57,7 @@ public class SignVerifyHandlerInterceptor implements HandlerInterceptor {
         signDTO.setTimestamp(HttpServletUtil.getRequestHeaderTimestamp());
         signDTO.setUid(HttpServletUtil.getRequestHeaderUid());
         signDTO.setContent(HttpServletUtil.getRequestAttributeEncryptedParameterContent());
-        signDTO.setSalt(HttpServletUtil.getRequestHeaderSalt());
+        signDTO.setSalt(SignUtil.decrypt(signDTO.getClientCode(), HttpServletUtil.getRequestHeaderSalt(), KeyType.PublicKey));
         signDTO.setAlgorithm(HttpServletUtil.getRequestHeaderAlgorithm());
         return signDTO;
     }
