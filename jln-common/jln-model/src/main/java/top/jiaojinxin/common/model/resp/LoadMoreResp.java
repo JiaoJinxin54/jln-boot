@@ -21,10 +21,16 @@ public class LoadMoreResp<ID, T> extends SingletonResp<LoadMoreResp.LoadMoreResu
 
     /**
      * 构造方法
+     */
+    public LoadMoreResp() {
+    }
+
+    /**
+     * 构造方法
      *
      * @param data 响应数据值
      */
-    private LoadMoreResp(@NonNull LoadMoreResult<ID, T> data) {
+    public LoadMoreResp(@NonNull LoadMoreResult<ID, T> data) {
         super(data);
     }
 

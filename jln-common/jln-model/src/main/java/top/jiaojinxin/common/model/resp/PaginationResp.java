@@ -19,10 +19,16 @@ public class PaginationResp<T> extends SingletonResp<PaginationResp.PaginationRe
 
     /**
      * 构造方法
+     */
+    public PaginationResp() {
+    }
+
+    /**
+     * 构造方法
      *
      * @param data 响应数据值
      */
-    protected PaginationResp(@NonNull PaginationResp.PaginationResult<T> data) {
+    public PaginationResp(@NonNull PaginationResp.PaginationResult<T> data) {
         super(data);
     }
 

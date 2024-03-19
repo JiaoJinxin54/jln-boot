@@ -2,13 +2,12 @@ package top.jiaojinxin.common.model.resp;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
+import top.jiaojinxin.util.PropertiesManager;
 
 import java.io.Serial;
 import java.util.Arrays;
 import java.util.Collection;
-
-import static top.jiaojinxin.util.I18nManager.getRespCode;
-import static top.jiaojinxin.util.PropertiesManager.getSuccess;
 
 /**
  * 多值响应对象
@@ -17,6 +16,7 @@ import static top.jiaojinxin.util.PropertiesManager.getSuccess;
  * @author JiaoJinxin
  */
 @Getter
+@Setter
 public class MultipartResp<T> extends Resp {
     @Serial
     private static final long serialVersionUID = -2746111135133306394L;
@@ -24,15 +24,21 @@ public class MultipartResp<T> extends Resp {
     /**
      * 响应数据值
      */
-    private final Collection<T> data;
+    private Collection<T> data;
+
+    /**
+     * 构造方法
+     */
+    public MultipartResp() {
+    }
 
     /**
      * 构造方法
      *
      * @param data 响应数据值
      */
-    protected MultipartResp(@NonNull Collection<T> data) {
-        super(true, getRespCode(getSuccess()));
+    public MultipartResp(@NonNull Collection<T> data) {
+        super(true, PropertiesManager.getSuccess());
         this.data = data;
     }
 

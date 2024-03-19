@@ -1,8 +1,8 @@
 package top.jiaojinxin.common.exception;
 
+import cn.hutool.core.text.StrFormatter;
 import lombok.Getter;
 import lombok.NonNull;
-import top.jiaojinxin.common.i18n.I18nCode;
 import top.jiaojinxin.util.I18nManager;
 
 import java.io.Serial;
@@ -24,9 +24,27 @@ public abstract class BaseException extends RuntimeException {
     protected static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
-     * 异常码
+     * 异常码code
      */
-    private final I18nCode i18nCode;
+    private final String code;
+
+    /**
+     * 异常码描述
+     */
+    private final String msg;
+
+    /**
+     * 构造方法
+     *
+     * @param code  国际化码code
+     * @param msg   国际化码描述
+     * @param cause 具体异常
+     */
+    public BaseException(@NonNull String code, String msg, @NonNull Throwable cause) {
+        super(cause);
+        this.code = code;
+        this.msg = msg;
+    }
 
     /**
      * 构造方法
@@ -36,8 +54,7 @@ public abstract class BaseException extends RuntimeException {
      * @param cause 具体异常
      */
     public BaseException(@NonNull String code, @NonNull String[] args, @NonNull Throwable cause) {
-        super(code, cause);
-        this.i18nCode = I18nManager.getRespCode(code, args);
+        this(code, I18nManager.getMsg(code, args), cause);
     }
 
     /**
@@ -57,8 +74,9 @@ public abstract class BaseException extends RuntimeException {
      * @param args 国际化码描述参数
      */
     public BaseException(@NonNull String code, @NonNull String[] args) {
-        super(code);
-        this.i18nCode = I18nManager.getRespCode(code, args);
+        super();
+        this.code = code;
+        this.msg = I18nManager.getMsg(code, args);
     }
 
     /**
@@ -68,5 +86,10 @@ public abstract class BaseException extends RuntimeException {
      */
     public BaseException(@NonNull String code) {
         this(code, EMPTY_STRING_ARRAY);
+    }
+
+    @Override
+    public String getMessage() {
+        return StrFormatter.format("{}({})", this.code, this.msg);
     }
 }

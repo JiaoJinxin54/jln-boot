@@ -2,11 +2,10 @@ package top.jiaojinxin.common.model.resp;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
+import top.jiaojinxin.util.PropertiesManager;
 
 import java.io.Serial;
-
-import static top.jiaojinxin.util.I18nManager.getRespCode;
-import static top.jiaojinxin.util.PropertiesManager.getSuccess;
 
 /**
  * 单值响应对象
@@ -15,6 +14,7 @@ import static top.jiaojinxin.util.PropertiesManager.getSuccess;
  * @author JiaoJinxin
  */
 @Getter
+@Setter
 public class SingletonResp<T> extends Resp {
     @Serial
     private static final long serialVersionUID = 4575956737833444028L;
@@ -22,15 +22,21 @@ public class SingletonResp<T> extends Resp {
     /**
      * 响应数据值
      */
-    private final T data;
+    private T data;
+
+    /**
+     * 构造方法
+     */
+    public SingletonResp() {
+    }
 
     /**
      * 构造方法
      *
      * @param data 响应数据值
      */
-    protected SingletonResp(@NonNull T data) {
-        super(true, getRespCode(getSuccess()));
+    public SingletonResp(@NonNull T data) {
+        super(true, PropertiesManager.getSuccess());
         this.data = data;
     }
 
